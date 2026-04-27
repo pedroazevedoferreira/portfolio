@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0a0a0f"/>
+      <stop offset=".5" stop-color="#0d1421"/>
+      <stop offset="1" stop-color="#0a0a0f"/>
+    </linearGradient>
+    <linearGradient id="capri" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#48cae4"/>
+      <stop offset="1" stop-color="#0077b6"/>
+    </linearGradient>
+    <linearGradient id="capri2" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset=".4" stop-color="#48cae4"/>
+      <stop offset="1" stop-color="#00bfff"/>
+    </linearGradient>
+    <radialGradient id="orb1" cx=".5" cy=".5" r=".5">
+      <stop offset="0" stop-color="#00bfff" stop-opacity=".5"/>
+      <stop offset="1" stop-color="#00bfff" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="orb2" cx=".5" cy=".5" r=".5">
+      <stop offset="0" stop-color="#0077b6" stop-opacity=".4"/>
+      <stop offset="1" stop-color="#0077b6" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="dots" x="0" y="0" width="32" height="32" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.2" fill="#48cae4" opacity=".15"/>
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#dots)"/>
+
+  <!-- Orbs decorativos -->
+  <circle cx="120" cy="120" r="280" fill="url(#orb1)"/>
+  <circle cx="1100" cy="540" r="260" fill="url(#orb2)"/>
+
+  <!-- Símbolos de código flutuando -->
+  <g font-family="Courier New, monospace" font-weight="700" opacity=".18" fill="#48cae4">
+    <text x="80" y="80" font-size="36">&lt;/&gt;</text>
+    <text x="1080" y="180" font-size="42">{ }</text>
+    <text x="60" y="540" font-size="38">=&gt;</text>
+    <text x="1060" y="500" font-size="32">[ ]</text>
+    <text x="540" y="100" font-size="28">;</text>
+    <text x="180" y="380" font-size="34">( )</text>
+  </g>
+
+  <!-- Badge "P" -->
+  <g transform="translate(80, 240)">
+    <rect width="150" height="150" rx="32" fill="url(#capri)"/>
+    <text x="75" y="105" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="90" font-weight="900" fill="#ffffff">P</text>
+  </g>
+
+  <!-- Texto principal -->
+  <g transform="translate(270, 270)">
+    <text font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="22" font-weight="600" fill="#48cae4" letter-spacing="4">OLÁ, EU SOU</text>
+    <text y="80" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="92" font-weight="900" fill="url(#capri2)">Pedro Azevedo</text>
+    <text y="135" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="32" font-weight="500" fill="#c0c4d0">Desenvolvedor <tspan font-weight="700" fill="#00bfff">Full Stack</tspan></text>
+  </g>
+
+  <!-- Tags inferiores -->
+  <g transform="translate(80, 510)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="20" font-weight="600">
+    <g>
+      <rect width="110" height="44" rx="22" fill="none" stroke="#48cae4" stroke-width="1.5" opacity=".6"/>
+      <text x="55" y="28" text-anchor="middle" fill="#48cae4">React</text>
+    </g>
+    <g transform="translate(125, 0)">
+      <rect width="125" height="44" rx="22" fill="none" stroke="#48cae4" stroke-width="1.5" opacity=".6"/>
+      <text x="62" y="28" text-anchor="middle" fill="#48cae4">Node.js</text>
+    </g>
+    <g transform="translate(265, 0)">
+      <rect width="155" height="44" rx="22" fill="none" stroke="#48cae4" stroke-width="1.5" opacity=".6"/>
+      <text x="77" y="28" text-anchor="middle" fill="#48cae4">TypeScript</text>
+    </g>
+    <g transform="translate(435, 0)">
+      <rect width="160" height="44" rx="22" fill="none" stroke="#48cae4" stroke-width="1.5" opacity=".6"/>
+      <text x="80" y="28" text-anchor="middle" fill="#48cae4">PostgreSQL</text>
+    </g>
+    <g transform="translate(610, 0)">
+      <rect width="115" height="44" rx="22" fill="none" stroke="#48cae4" stroke-width="1.5" opacity=".6"/>
+      <text x="57" y="28" text-anchor="middle" fill="#48cae4">Python</text>
+    </g>
+  </g>
+
+  <!-- Domínio canto direito -->
+  <text x="1120" y="595" text-anchor="end" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="18" font-weight="600" fill="#48cae4" opacity=".7">github.com/pedroazevedoferreira</text>
+</svg>
