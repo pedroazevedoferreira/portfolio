@@ -1,561 +1,299 @@
-// ===== HELPERS =====
-const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-const isDesktop = window.matchMedia('(hover: hover)').matches && window.innerWidth > 900;
+/*
+  Comportamentos do portfólio:
+  1. Monta projetos e áreas de design a partir de dados.js
+  2. Menu no celular
+  3. Destaque da seção atual no menu
+  4. Remove o service worker da versão anterior do site
+*/
 
-// ===== NAV / SCROLL / PROGRESS / BACK-TO-TOP =====
-const nav = document.getElementById('nav');
-const progressBar = document.getElementById('progress-bar');
-const backToTop = document.getElementById('back-to-top');
-const navIndicator = document.getElementById('nav-indicator');
+(function () {
+  "use strict";
 
-window.addEventListener('scroll', () => {
-  const scrollY = window.scrollY;
-  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-  const progress = (scrollY / docHeight) * 100;
+  document.documentElement.classList.add("js");
 
-  nav.classList.toggle('scrolled', scrollY > 40);
-  progressBar.style.width = progress + '%';
-  backToTop.classList.toggle('visible', scrollY > 600);
+  const dados = window.PORTFOLIO || { projetos: [], design: { areas: [], trabalhos: [] } };
 
-  updateActiveNav(scrollY);
-});
-
-backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-
-// ===== ACTIVE NAV INDICATOR =====
-function updateActiveNav(scrollY) {
-  const sections = document.querySelectorAll('section[id]');
-  let activeLink = null;
-  sections.forEach(s => {
-    const top = s.offsetTop, height = s.offsetHeight;
-    const link = document.querySelector(`.nav-links a[href="#${s.id}"]`);
-    if (link) {
-      const isActive = (scrollY + 100) >= top && (scrollY + 100) < top + height;
-      link.classList.toggle('active', isActive);
-      if (isActive) activeLink = link;
+  /* Cria um elemento com atributos e filhos (texto ou nós) */
+  function el(tag, attrs, children) {
+    const node = document.createElement(tag);
+    if (attrs) {
+      for (const [key, value] of Object.entries(attrs)) {
+        if (value === undefined || value === null || value === false) continue;
+        if (key === "class") node.className = value;
+        else node.setAttribute(key, value === true ? "" : String(value));
+      }
     }
-  });
-  if (activeLink && navIndicator && window.innerWidth > 640) {
-    const rect = activeLink.getBoundingClientRect();
-    const parentRect = activeLink.parentElement.parentElement.getBoundingClientRect();
-    navIndicator.style.left = (rect.left - parentRect.left) + 'px';
-    navIndicator.style.width = rect.width + 'px';
-    navIndicator.classList.add('visible');
-  } else if (navIndicator) {
-    navIndicator.classList.remove('visible');
-  }
-}
-
-// ===== HAMBURGER =====
-const hamburger = document.getElementById('hamburger');
-const navLinks = document.querySelector('.nav-links');
-hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
-document.querySelectorAll('.nav-links a').forEach(a => {
-  a.addEventListener('click', () => navLinks.classList.remove('open'));
-});
-
-// ===== THEME TOGGLE =====
-const themeToggle = document.getElementById('theme-toggle');
-const savedTheme = localStorage.getItem('theme') || 'dark';
-if (savedTheme === 'light') document.documentElement.setAttribute('data-theme', 'light');
-
-themeToggle.addEventListener('click', () => {
-  const current = document.documentElement.getAttribute('data-theme');
-  if (current === 'light') {
-    document.documentElement.removeAttribute('data-theme');
-    localStorage.setItem('theme', 'dark');
-  } else {
-    document.documentElement.setAttribute('data-theme', 'light');
-    localStorage.setItem('theme', 'light');
-  }
-});
-
-// ===== I18N (PT/EN) =====
-const translations = {
-  pt: {
-    'nav.about': 'Sobre', 'nav.skills': 'Skills', 'nav.path': 'Trajetória',
-    'nav.certs': 'Certificados', 'nav.projects': 'Projetos', 'nav.contact': 'Contato'
-  },
-  en: {
-    'nav.about': 'About', 'nav.skills': 'Skills', 'nav.path': 'Journey',
-    'nav.certs': 'Certificates', 'nav.projects': 'Projects', 'nav.contact': 'Contact'
-  }
-};
-
-const langToggle = document.getElementById('lang-toggle');
-const savedLang = localStorage.getItem('lang') || 'pt';
-applyLang(savedLang);
-
-langToggle.addEventListener('click', () => {
-  const current = document.documentElement.lang === 'en' ? 'en' : 'pt';
-  const next = current === 'pt' ? 'en' : 'pt';
-  applyLang(next);
-  localStorage.setItem('lang', next);
-});
-
-function applyLang(lang) {
-  document.documentElement.lang = lang === 'en' ? 'en' : 'pt-BR';
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const key = el.dataset.i18n;
-    if (translations[lang]?.[key]) el.textContent = translations[lang][key];
-  });
-  langToggle.querySelector('.lang-current').textContent = lang === 'en' ? 'EN' : 'PT';
-}
-
-// ===== TYPING NO NOME (uma vez) =====
-const heroNameEl = document.querySelector('.hero-name');
-if (heroNameEl && !reduceMotion) {
-  const fullName = heroNameEl.textContent;
-  heroNameEl.textContent = '';
-  heroNameEl.classList.add('typing');
-  let i = 0;
-  const typeName = () => {
-    if (i < fullName.length) {
-      heroNameEl.textContent += fullName[i++];
-      setTimeout(typeName, 90);
-    } else {
-      heroNameEl.classList.remove('typing');
+    for (const child of [].concat(children || [])) {
+      if (child === undefined || child === null || child === false) continue;
+      node.append(child instanceof Node ? child : document.createTextNode(String(child)));
     }
+    return node;
+  }
+
+  function preenchido(valor) {
+    if (Array.isArray(valor)) return valor.length > 0;
+    return typeof valor === "string" ? valor.trim() !== "" : Boolean(valor);
+  }
+
+  function externo(url) {
+    return /^https?:\/\//.test(url);
+  }
+
+  function link(rotulo, url, classe) {
+    const abreFora = externo(url);
+    return el("a", { class: classe, href: url, target: abreFora && "_blank", rel: abreFora && "noopener noreferrer" }, [
+      rotulo,
+      abreFora ? el("span", { "aria-hidden": "true" }, "↗") : null,
+      abreFora ? el("span", { class: "visually-hidden" }, "(abre em nova aba)") : null,
+    ]);
+  }
+
+  /* 1a. Projetos ---------------------------------------------------------- */
+
+  /* Um projeto só é exibido quando está publicado e tem conteúdo real nos campos essenciais */
+  const camposObrigatorios = {
+    estudo: ["titulo", "resumo", "autoria", "stack", "imagens"],
+    ficha: ["titulo", "resumo", "autoria", "stack"],
   };
-  setTimeout(typeName, 400);
-}
 
-// ===== TYPED EFFECT (role) =====
-const roles = ['Frontend', 'Backend', 'Full Stack'];
-let roleIndex = 0, charIndex = 0, deleting = false;
-const typedEl = document.getElementById('typed');
-
-function type() {
-  const current = roles[roleIndex];
-  if (!deleting) {
-    typedEl.textContent = current.slice(0, ++charIndex);
-    if (charIndex === current.length) {
-      deleting = true;
-      setTimeout(type, 1600);
-      return;
-    }
-  } else {
-    typedEl.textContent = current.slice(0, --charIndex);
-    if (charIndex === 0) {
-      deleting = false;
-      roleIndex = (roleIndex + 1) % roles.length;
-    }
+  function projetoCompleto(projeto) {
+    if (!projeto || projeto.publicado !== true) return false;
+    const campos = camposObrigatorios[projeto.formato];
+    if (!campos) return false;
+    if (!campos.every((campo) => preenchido(projeto[campo]))) return false;
+    return preenchido(projeto.autoria.rotulo);
   }
-  setTimeout(type, deleting ? 60 : 100);
-}
-type();
 
-// ===== SCROLL REVEAL =====
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.classList.add('visible', 'in-view');
-      observer.unobserve(e.target);
-    }
-  });
-}, { threshold: 0.1 });
+  function montarImagens(projeto) {
+    const figuras = projeto.imagens
+      .filter((imagem) => preenchido(imagem.src) && preenchido(imagem.alt))
+      .map((imagem) => {
+        const img = el("img", {
+          src: imagem.src,
+          alt: imagem.alt,
+          width: imagem.largura,
+          height: imagem.altura,
+          loading: "lazy",
+          decoding: "async",
+        });
+        if (imagem.tipo === "celular") {
+          return el("div", { class: "shot shot-phone" }, img);
+        }
+        return el("div", { class: "shot shot-desktop" }, [
+          imagem.endereco ? el("div", { class: "shot-bar", "aria-hidden": "true" }, el("span", null, imagem.endereco)) : null,
+          img,
+        ]);
+      });
 
-document.querySelectorAll(
-  '.sobre-text, .sobre-card, .skill-category, .project-card, .contato-item, .contato-form, .stat, .timeline-item, .cert-card, .soft-card, .testimonial-card, .now-card'
-).forEach((el, i) => {
-  el.classList.add('reveal');
-  el.style.transitionDelay = `${(i % 4) * 80}ms`;
-  observer.observe(el);
-});
+    if (!figuras.length) return null;
 
-// ===== CONTADOR ANIMADO =====
-const statObserver = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      const el = e.target;
-      const target = parseInt(el.dataset.target, 10);
-      const suffix = el.dataset.suffix || '';
-      const duration = 1400;
-      const start = performance.now();
-      function tick(now) {
-        const t = Math.min(1, (now - start) / duration);
-        const ease = 1 - Math.pow(1 - t, 3);
-        el.textContent = Math.floor(ease * target) + (t === 1 ? suffix : '');
-        if (t < 1) requestAnimationFrame(tick);
-        else el.textContent = target + suffix;
+    return el("figure", { class: "case-media" }, [
+      ...figuras,
+      el("figcaption", null, "Telas reais do site publicado, capturadas em computador e celular."),
+    ]);
+  }
+
+  function montarProjeto(projeto, indice) {
+    const idTitulo = "projeto-" + projeto.id + "-titulo";
+    const numero = "P." + String(indice + 1).padStart(2, "0");
+
+    const cabecalho = el("header", { class: "case-head grid" }, [
+      el("p", { class: "case-number" }, numero),
+      el("div", { class: "case-heading" }, [
+        preenchido(projeto.categoria) ? el("p", { class: "case-category" }, projeto.categoria) : null,
+        el("h3", { class: "case-title", id: idTitulo }, [
+          projeto.titulo,
+          preenchido(projeto.subtitulo) ? el("span", { class: "case-subtitle" }, projeto.subtitulo) : null,
+        ]),
+        el("p", { class: "case-summary" }, projeto.resumo),
+      ]),
+    ]);
+
+    const autoria = el("div", { class: "authorship" }, [
+      el("p", { class: "authorship-type" }, [
+        el("span", { class: "authorship-mark", "data-tipo": projeto.autoria.tipo, "aria-hidden": "true" }),
+        projeto.autoria.rotulo,
+      ]),
+      preenchido(projeto.autoria.detalhe) ? el("p", null, projeto.autoria.detalhe) : null,
+    ]);
+
+    const principal = el("div", { class: "case-main" }, [
+      preenchido(projeto.contexto)
+        ? el("div", { class: "case-block" }, [el("h4", null, "Contexto"), el("p", null, projeto.contexto)])
+        : null,
+      preenchido(projeto.contribuicao) || preenchido(projeto.entregas)
+        ? el("div", { class: "case-block" }, [
+            el("h4", null, projeto.tituloEntregas || "O que fiz"),
+            preenchido(projeto.contribuicao) ? el("p", null, projeto.contribuicao) : null,
+            preenchido(projeto.entregas)
+              ? el("ul", { class: "list-dash" }, projeto.entregas.map((item) => el("li", null, item)))
+              : null,
+          ])
+        : null,
+    ]);
+
+    const lateral = el("div", { class: "case-side" }, [
+      el("div", { class: "case-block" }, [
+        el("h4", null, projeto.tituloStack || "Tecnologias"),
+        el("ul", { class: "tags" }, projeto.stack.map((item) => el("li", null, item))),
+        preenchido(projeto.notaStack) ? el("p", { class: "case-note" }, projeto.notaStack) : null,
+      ]),
+      preenchido(projeto.links)
+        ? el("div", { class: "case-block" }, [
+            el("h4", null, "Links"),
+            el(
+              "ul",
+              { class: "case-links" },
+              projeto.links.filter((item) => preenchido(item.url)).map((item) => el("li", null, link(item.rotulo, item.url)))
+            ),
+          ])
+        : null,
+    ]);
+
+    return el(
+      "article",
+      { class: "case case-" + projeto.formato, id: "projeto-" + projeto.id, "aria-labelledby": idTitulo },
+      [
+        cabecalho,
+        projeto.formato === "estudo" ? montarImagens(projeto) : null,
+        el("div", { class: "case-body grid" }, [el("div", { class: "case-aside" }, autoria), principal, lateral]),
+      ]
+    );
+  }
+
+  const listaProjetos = document.getElementById("lista-projetos");
+  if (listaProjetos) {
+    const projetos = (dados.projetos || []).filter(projetoCompleto);
+    // Estudos de caso primeiro, fichas curtas depois
+    projetos.sort((a, b) => (a.formato === b.formato ? 0 : a.formato === "estudo" ? -1 : 1));
+    projetos.forEach((projeto, indice) => listaProjetos.append(montarProjeto(projeto, indice)));
+  }
+
+  /* 1b. Design ------------------------------------------------------------ */
+
+  function trabalhoCompleto(trabalho) {
+    return (
+      trabalho &&
+      trabalho.publicado === true &&
+      preenchido(trabalho.titulo) &&
+      trabalho.imagem &&
+      preenchido(trabalho.imagem.src) &&
+      preenchido(trabalho.imagem.alt)
+    );
+  }
+
+  const areasDesign = document.getElementById("areas-design");
+  if (areasDesign && dados.design) {
+    const trabalhos = (dados.design.trabalhos || []).filter(trabalhoCompleto);
+
+    (dados.design.areas || []).forEach((area, indice) => {
+      const daArea = trabalhos.filter((trabalho) => trabalho.area === area.id);
+
+      const obras = daArea.length
+        ? el(
+            "div",
+            { class: "design-works" },
+            daArea.map((trabalho) =>
+              el("figure", null, [
+                el("img", {
+                  src: trabalho.imagem.src,
+                  alt: trabalho.imagem.alt,
+                  width: trabalho.imagem.largura,
+                  height: trabalho.imagem.altura,
+                  loading: "lazy",
+                  decoding: "async",
+                }),
+                el("figcaption", null, [
+                  el("strong", null, trabalho.titulo),
+                  preenchido(trabalho.descricao) ? trabalho.descricao : null,
+                ]),
+              ])
+            )
+          )
+        : el("p", { class: "design-area-status" }, "Imagens em seleção");
+
+      areasDesign.append(
+        el("article", { class: "design-area", id: "design-" + area.id }, [
+          el("span", { class: "design-area-index", "aria-hidden": "true" }, "D." + String(indice + 1).padStart(2, "0")),
+          el("h3", null, area.nome),
+          preenchido(area.descricao) ? el("p", null, area.descricao) : null,
+          obras,
+        ])
+      );
+    });
+  }
+
+  /* 2. Menu no celular ---------------------------------------------------- */
+
+  const botaoMenu = document.querySelector(".nav-toggle");
+  const menu = document.getElementById("menu-principal");
+  const telaPequena = window.matchMedia("(max-width: 47.99rem)");
+
+  function definirMenu(aberto) {
+    if (!botaoMenu || !menu) return;
+    botaoMenu.setAttribute("aria-expanded", String(aberto));
+    botaoMenu.querySelector(".nav-toggle-label").textContent = aberto ? "Fechar" : "Menu";
+    menu.classList.toggle("is-open", aberto);
+  }
+
+  if (botaoMenu && menu) {
+    botaoMenu.addEventListener("click", () => {
+      definirMenu(botaoMenu.getAttribute("aria-expanded") !== "true");
+    });
+
+    menu.addEventListener("click", (evento) => {
+      if (evento.target.closest("a")) definirMenu(false);
+    });
+
+    document.addEventListener("keydown", (evento) => {
+      if (evento.key === "Escape" && botaoMenu.getAttribute("aria-expanded") === "true") {
+        definirMenu(false);
+        botaoMenu.focus();
       }
-      requestAnimationFrame(tick);
-      statObserver.unobserve(el);
-    }
-  });
-}, { threshold: 0.6 });
-
-document.querySelectorAll('.stat-num[data-target]').forEach(el => statObserver.observe(el));
-
-// ===== CONTATO FORM + CONFETE =====
-const contatoForm = document.getElementById('contato-form');
-contatoForm.addEventListener('submit', function(e) {
-  // Se Formspree estiver configurado, deixa o submit nativo
-  const action = this.getAttribute('action') || '';
-  const isFormspree = action.includes('formspree.io') && !action.includes('YOUR_FORMSPREE_ID');
-  if (!isFormspree) {
-    e.preventDefault();
-    showFormSuccess();
-  } else {
-    // Intercepta pra fazer fetch async e mostrar confete
-    e.preventDefault();
-    const data = new FormData(this);
-    fetch(action, { method: 'POST', body: data, headers: { Accept: 'application/json' } })
-      .then(r => r.ok ? showFormSuccess() : showFormError())
-      .catch(() => showFormError());
-  }
-});
-
-function showFormSuccess() {
-  const feedback = document.getElementById('form-feedback');
-  feedback.style.color = 'var(--accent2)';
-  feedback.textContent = '✨ Mensagem enviada! Entrarei em contato em breve.';
-  contatoForm.reset();
-  fireConfetti();
-  setTimeout(() => feedback.textContent = '', 5000);
-}
-
-function showFormError() {
-  const feedback = document.getElementById('form-feedback');
-  feedback.style.color = '#ff6b6b';
-  feedback.textContent = 'Erro ao enviar. Tenta de novo ou me chama no e-mail direto.';
-  setTimeout(() => feedback.textContent = '', 5000);
-}
-
-// ===== CONFETE =====
-const confettiCanvas = document.getElementById('confetti-canvas');
-const cctx = confettiCanvas.getContext('2d');
-
-function resizeConfetti() {
-  confettiCanvas.width = window.innerWidth;
-  confettiCanvas.height = window.innerHeight;
-}
-resizeConfetti();
-window.addEventListener('resize', resizeConfetti);
-
-function fireConfetti() {
-  if (reduceMotion) return;
-  const colors = ['#00bfff', '#48cae4', '#0077b6', '#ffffff', '#a3e635'];
-  const pieces = [];
-  for (let i = 0; i < 120; i++) {
-    pieces.push({
-      x: window.innerWidth / 2,
-      y: window.innerHeight / 2,
-      vx: (Math.random() - 0.5) * 18,
-      vy: (Math.random() - 1) * 18,
-      size: Math.random() * 6 + 4,
-      color: colors[Math.floor(Math.random() * colors.length)],
-      rot: Math.random() * Math.PI,
-      vr: (Math.random() - 0.5) * 0.3,
-      life: 1
     });
-  }
 
-  function draw() {
-    cctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
-    let alive = 0;
-    pieces.forEach(p => {
-      p.vy += 0.5;
-      p.x += p.vx;
-      p.y += p.vy;
-      p.rot += p.vr;
-      p.life -= 0.012;
-      if (p.life > 0 && p.y < window.innerHeight + 50) {
-        alive++;
-        cctx.save();
-        cctx.translate(p.x, p.y);
-        cctx.rotate(p.rot);
-        cctx.fillStyle = p.color;
-        cctx.globalAlpha = Math.max(0, p.life);
-        cctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.6);
-        cctx.restore();
-      }
+    document.addEventListener("click", (evento) => {
+      if (menu.classList.contains("is-open") && !evento.target.closest(".site-header")) definirMenu(false);
     });
-    if (alive > 0) requestAnimationFrame(draw);
-    else cctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
-  }
-  draw();
-}
 
-// ===== CURSOR CUSTOMIZADO + MAGNETIC =====
-const cursorDot = document.getElementById('cursor-dot');
-const cursorRing = document.getElementById('cursor-ring');
-
-if (isDesktop) {
-  let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
-
-  window.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-    cursorDot.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%, -50%)`;
-  });
-
-  function animateRing() {
-    ringX += (mouseX - ringX) * 0.18;
-    ringY += (mouseY - ringY) * 0.18;
-    cursorRing.style.transform = `translate(${ringX}px, ${ringY}px) translate(-50%, -50%)`;
-    requestAnimationFrame(animateRing);
-  }
-  animateRing();
-
-  document.querySelectorAll('a, button, .project-card, .tag, input, textarea').forEach(el => {
-    el.addEventListener('mouseenter', () => cursorRing.classList.add('hover'));
-    el.addEventListener('mouseleave', () => cursorRing.classList.remove('hover'));
-  });
-
-  document.querySelectorAll('.btn').forEach(btn => {
-    btn.addEventListener('mousemove', (e) => {
-      const rect = btn.getBoundingClientRect();
-      const x = e.clientX - rect.left - rect.width / 2;
-      const y = e.clientY - rect.top - rect.height / 2;
-      btn.style.transform = `translate(${x * 0.25}px, ${y * 0.4}px)`;
-    });
-    btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
-  });
-}
-
-// ===== TILT 3D NOS PROJECT CARDS =====
-if (isDesktop && !reduceMotion) {
-  document.querySelectorAll('.project-card').forEach(card => {
-    card.addEventListener('mousemove', (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width;
-      const y = (e.clientY - rect.top) / rect.height;
-      const rotY = (x - 0.5) * 12;
-      const rotX = (0.5 - y) * 12;
-      card.style.transform = `perspective(1000px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateY(-6px)`;
-    });
-    card.addEventListener('mouseleave', () => {
-      card.style.transform = '';
-    });
-  });
-}
-
-// ===== MODAL DE PROJETO =====
-const modalOverlay = document.getElementById('modal-overlay');
-const modalIcon = document.getElementById('modal-icon');
-const modalTitle = document.getElementById('modal-title');
-const modalProblem = document.getElementById('modal-problem');
-const modalSolution = document.getElementById('modal-solution');
-const modalLearnings = document.getElementById('modal-learnings');
-const modalClose = document.getElementById('modal-close');
-
-function openModal(card) {
-  modalIcon.textContent = card.dataset.icon;
-  modalTitle.textContent = card.dataset.title;
-  modalProblem.textContent = card.dataset.problem;
-  modalSolution.textContent = card.dataset.solution;
-  modalLearnings.textContent = card.dataset.learnings;
-  modalOverlay.classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-
-function closeModal() {
-  modalOverlay.classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-document.querySelectorAll('.project-card').forEach(card => {
-  card.addEventListener('click', (e) => {
-    if (e.target.closest('.project-link')) return;
-    openModal(card);
-  });
-});
-
-modalClose.addEventListener('click', closeModal);
-modalOverlay.addEventListener('click', (e) => {
-  if (e.target === modalOverlay) closeModal();
-});
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && modalOverlay.classList.contains('open')) closeModal();
-});
-
-// ===== PARTÍCULAS NO HERO (CSS puro animado via JS gerador) =====
-const particlesEl = document.getElementById('particles');
-if (particlesEl && !reduceMotion) {
-  const count = window.innerWidth < 640 ? 20 : 40;
-  for (let i = 0; i < count; i++) {
-    const p = document.createElement('span');
-    p.className = 'particle';
-    const xStart = Math.random() * 100;
-    const xEnd = xStart + (Math.random() - 0.5) * 30;
-    p.style.setProperty('--x-start', xStart + 'vw');
-    p.style.setProperty('--x-end', xEnd + 'vw');
-    p.style.setProperty('--dur', (10 + Math.random() * 14) + 's');
-    p.style.setProperty('--delay', (-Math.random() * 14) + 's');
-    p.style.left = '0';
-    p.style.top = '0';
-    particlesEl.appendChild(p);
-  }
-}
-
-// ===== CMD+K BUSCA RÁPIDA =====
-const cmdkOverlay = document.getElementById('cmdk-overlay');
-const cmdkInput = document.getElementById('cmdk-input');
-const cmdkResults = document.getElementById('cmdk-results');
-const cmdkHint = document.getElementById('cmdk-hint');
-
-const searchData = [
-  { group: 'Seções', title: 'Sobre', desc: 'Conheça um pouco mais sobre mim', target: '#sobre', icon: '👋' },
-  { group: 'Seções', title: 'Skills', desc: 'Tecnologias que uso', target: '#skills', icon: '⚡' },
-  { group: 'Seções', title: 'Trajetória', desc: 'Estágio, faculdade, cursos', target: '#experiencia', icon: '📍' },
-  { group: 'Seções', title: 'Certificados', desc: 'Cursos e formações', target: '#certificados', icon: '🎓' },
-  { group: 'Seções', title: 'Atualmente', desc: 'O que estou fazendo agora', target: '#agora', icon: '⚡' },
-  { group: 'Seções', title: 'Projetos', desc: 'TaskFlow, API, DocTalk', target: '#projetos', icon: '💼' },
-  { group: 'Seções', title: 'Depoimentos', desc: 'O que dizem sobre mim', target: '#depoimentos', icon: '💬' },
-  { group: 'Seções', title: 'Contato', desc: 'Como falar comigo', target: '#contato', icon: '📨' },
-  { group: 'Projetos', title: 'TaskFlow', desc: 'CRUD com autenticação JWT', target: '#projetos', icon: '✅' },
-  { group: 'Projetos', title: 'Projeto API', desc: 'SPA consumindo API REST', target: '#projetos', icon: '🌐' },
-  { group: 'Projetos', title: 'DocTalk', desc: 'Chat com documentos via IA', target: '#projetos', icon: '📄' },
-  { group: 'Links', title: 'GitHub', desc: 'github.com/pedroazevedoferreira', target: 'https://github.com/pedroazevedoferreira', icon: '🐙', external: true },
-  { group: 'Links', title: 'LinkedIn', desc: 'linkedin.com/in/pedro-azevedo', target: 'https://www.linkedin.com/in/pedro-azevedo-986143302/', icon: '💼', external: true },
-  { group: 'Links', title: 'E-mail', desc: 'pedroazevedoferreira2006@gmail.com', target: 'mailto:pedroazevedoferreira2006@gmail.com', icon: '✉️', external: true },
-  { group: 'Ações', title: 'Alternar tema', desc: 'Dark / Light mode', action: 'theme', icon: '🌓' },
-  { group: 'Ações', title: 'Alternar idioma', desc: 'Português / English', action: 'lang', icon: '🌐' },
-  { group: 'Ações', title: 'Voltar ao topo', desc: 'Scroll suave pro início', action: 'top', icon: '⬆️' }
-];
-
-let cmdkActive = 0;
-let cmdkFiltered = [];
-
-function openCmdK() {
-  cmdkOverlay.classList.add('open');
-  document.body.style.overflow = 'hidden';
-  cmdkInput.value = '';
-  cmdkInput.focus();
-  renderCmdK('');
-}
-
-function closeCmdK() {
-  cmdkOverlay.classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-function renderCmdK(query) {
-  const q = query.toLowerCase().trim();
-  cmdkFiltered = q
-    ? searchData.filter(i =>
-        i.title.toLowerCase().includes(q) ||
-        i.desc.toLowerCase().includes(q) ||
-        i.group.toLowerCase().includes(q))
-    : searchData;
-  cmdkActive = 0;
-
-  if (cmdkFiltered.length === 0) {
-    cmdkResults.innerHTML = '<div class="cmdk-empty">Nenhum resultado pra "' + escapeHtml(query) + '"</div>';
-    return;
+    telaPequena.addEventListener("change", () => definirMenu(false));
   }
 
-  let html = '';
-  let lastGroup = '';
-  cmdkFiltered.forEach((item, idx) => {
-    if (item.group !== lastGroup) {
-      html += `<div class="cmdk-section-label">${item.group}</div>`;
-      lastGroup = item.group;
-    }
-    html += `<div class="cmdk-result${idx === 0 ? ' active' : ''}" data-idx="${idx}">
-      <span class="cmdk-result-icon">${item.icon}</span>
-      <div class="cmdk-result-meta">
-        <div class="cmdk-result-title">${escapeHtml(item.title)}</div>
-        <div class="cmdk-result-desc">${escapeHtml(item.desc)}</div>
-      </div>
-    </div>`;
-  });
-  cmdkResults.innerHTML = html;
+  /* 3. Seção atual no menu ------------------------------------------------ */
 
-  cmdkResults.querySelectorAll('.cmdk-result').forEach(el => {
-    el.addEventListener('click', () => {
-      cmdkActive = parseInt(el.dataset.idx, 10);
-      executeCmdK();
-    });
-    el.addEventListener('mouseenter', () => {
-      cmdkResults.querySelectorAll('.cmdk-result').forEach(r => r.classList.remove('active'));
-      el.classList.add('active');
-      cmdkActive = parseInt(el.dataset.idx, 10);
-    });
-  });
-}
+  const linksMenu = Array.from(document.querySelectorAll('.site-nav a[href^="#"]'));
+  const secoes = linksMenu.map((a) => document.querySelector(a.getAttribute("href"))).filter(Boolean);
 
-function escapeHtml(s) {
-  return s.replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-}
-
-function executeCmdK() {
-  const item = cmdkFiltered[cmdkActive];
-  if (!item) return;
-  closeCmdK();
-
-  if (item.action === 'theme') return themeToggle.click();
-  if (item.action === 'lang') return langToggle.click();
-  if (item.action === 'top') return window.scrollTo({ top: 0, behavior: 'smooth' });
-
-  if (item.external) {
-    if (item.target.startsWith('mailto:')) window.location.href = item.target;
-    else window.open(item.target, '_blank', 'noopener');
-    return;
+  if ("IntersectionObserver" in window && secoes.length) {
+    const visiveis = new Map();
+    const observador = new IntersectionObserver(
+      (entradas) => {
+        entradas.forEach((entrada) => visiveis.set(entrada.target.id, entrada.isIntersecting));
+        const atual = secoes.find((secao) => visiveis.get(secao.id));
+        linksMenu.forEach((a) => {
+          if (atual && a.getAttribute("href") === "#" + atual.id) a.setAttribute("aria-current", "true");
+          else a.removeAttribute("aria-current");
+        });
+      },
+      { rootMargin: "-45% 0px -50% 0px" }
+    );
+    secoes.forEach((secao) => observador.observe(secao));
   }
-  if (item.target.startsWith('#')) {
-    const el = document.querySelector(item.target);
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  /* 4. Limpeza da versão anterior ---------------------------------------- */
+
+  // A primeira versão do site registrava um service worker com cache.
+  // Esta versão não usa cache offline, então remove o registro e os caches antigos.
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker
+      .getRegistrations()
+      .then((registros) => registros.forEach((registro) => registro.unregister()))
+      .catch(() => {});
   }
-}
-
-cmdkInput?.addEventListener('input', e => renderCmdK(e.target.value));
-cmdkOverlay?.addEventListener('click', e => { if (e.target === cmdkOverlay) closeCmdK(); });
-cmdkHint?.addEventListener('click', openCmdK);
-
-document.addEventListener('keydown', (e) => {
-  const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
-  const cmdK = (isMac ? e.metaKey : e.ctrlKey) && e.key.toLowerCase() === 'k';
-
-  if (cmdK) {
-    e.preventDefault();
-    cmdkOverlay.classList.contains('open') ? closeCmdK() : openCmdK();
-    return;
+  if ("caches" in window) {
+    caches
+      .keys()
+      .then((chaves) => chaves.filter((chave) => chave.startsWith("pedro-portfolio")).forEach((chave) => caches.delete(chave)))
+      .catch(() => {});
   }
-  if (!cmdkOverlay.classList.contains('open')) return;
-
-  if (e.key === 'Escape') closeCmdK();
-  if (e.key === 'ArrowDown') {
-    e.preventDefault();
-    cmdkActive = Math.min(cmdkFiltered.length - 1, cmdkActive + 1);
-    updateCmdKActive();
-  }
-  if (e.key === 'ArrowUp') {
-    e.preventDefault();
-    cmdkActive = Math.max(0, cmdkActive - 1);
-    updateCmdKActive();
-  }
-  if (e.key === 'Enter') {
-    e.preventDefault();
-    executeCmdK();
-  }
-});
-
-function updateCmdKActive() {
-  cmdkResults.querySelectorAll('.cmdk-result').forEach(el => {
-    const idx = parseInt(el.dataset.idx, 10);
-    el.classList.toggle('active', idx === cmdkActive);
-    if (idx === cmdkActive) el.scrollIntoView({ block: 'nearest' });
-  });
-}
-
-// ===== SERVICE WORKER (PWA) =====
-if ('serviceWorker' in navigator && location.protocol !== 'file:') {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('sw.js').catch(() => { /* silencioso */ });
-  });
-}
-
-// ===== TIMELINE: linha animada conforme scroll =====
-const timeline = document.getElementById('timeline');
-if (timeline) {
-  timeline.classList.add('animated');
-  window.addEventListener('scroll', () => {
-    const rect = timeline.getBoundingClientRect();
-    const total = rect.height;
-    const visible = Math.max(0, Math.min(total, window.innerHeight - rect.top));
-    const pct = Math.min(100, (visible / total) * 130);
-    timeline.style.setProperty('--draw', pct + '%');
-  });
-}
+})();

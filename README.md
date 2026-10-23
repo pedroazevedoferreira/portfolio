@@ -1,68 +1,62 @@
-# Pedro Azevedo — Portfólio
+# Pedro Azevedo Ferreira · Portfólio
 
-Portfólio pessoal feito com **HTML, CSS e JavaScript puros** (zero dependências externas).
+Portfólio pessoal em HTML, CSS e JavaScript, sem framework, etapa de build ou dependências.
 
-🔗 **Live:** https://pedroazevedoferreira.github.io/portfolio/
+Publicado no GitHub Pages: https://pedroazevedoferreira.github.io/portfolio/
 
-## 🚀 Stack
+## Versões
 
-- HTML5 semântico
-- CSS3 (custom properties, grid, flex, animações)
-- JavaScript vanilla (zero frameworks)
-- PWA (manifest + service worker)
-- Devicon e Simple Icons para logos via CDN
+- `v2` (atual): direção editorial clara, estudos de caso com telas reais e conteúdo em `dados.js`.
+- `v1`: primeira versão do portfólio, preservada na tag [`v1`](https://github.com/pedroazevedoferreira/portfolio/tree/v1).
 
-## ✨ Features
+## Visualizar localmente
 
-- 🎨 Tema dark/light com persistência
-- 🌐 Suporte PT/EN
-- ⌨️ Busca rápida `Ctrl+K`
-- 📱 Responsivo + PWA instalável
-- ♿ Acessível (`prefers-reduced-motion`, focus states)
-- 🎯 Modal de detalhes dos projetos
-- 🪄 Cursor customizado + magnetic buttons (desktop)
-- 📊 GitHub stats embed
-- 🎉 Confete ao enviar formulário
-- 📈 Indicador de progresso de leitura
-
-## 📂 Estrutura
-
-```
-portfolio/
-├── index.html       # Página principal
-├── style.css        # Estilos
-├── script.js        # Interatividade
-├── sw.js            # Service worker (PWA)
-├── manifest.json    # Manifest PWA
-└── img/             # Imagens e ícones
-    ├── pedro.png
-    ├── og-image.svg
-    ├── icon-192.svg
-    └── icon-512.svg
-```
-
-## 🛠️ Rodando localmente
-
-Como é HTML/CSS/JS puros, basta abrir o `index.html` no navegador.
-
-Para testar o **service worker (PWA)**, é preciso servir via HTTP:
+Abrir o `index.html` direto no navegador funciona, mas a prévia mais fiel é por HTTP:
 
 ```bash
-# Python 3
-python -m http.server 8000
-
-# Node
-npx serve
+python -m http.server 8765
 ```
 
-E abrir `http://localhost:8000`.
+Depois, abra http://localhost:8765.
 
-## 📝 Personalização
+## Estrutura
 
-- **Formspree**: substituir `YOUR_FORMSPREE_ID` em `index.html` pelo ID gerado em [formspree.io](https://formspree.io)
-- **WhatsApp**: trocar `5521999999999` pelo número real
-- **Imagens dos projetos**: substituir os divs `.project-preview` por `<img src="img/...">` quando tiver os prints
+```
+index.html        Página única: apresentação, Sobre, Experiência, Projetos, Design e Contato
+styles.css        Tokens de cor e tipografia no início; depois as seções, na ordem da página
+dados.js          Conteúdo editável: projetos e trabalhos de design
+script.js         Monta projetos e design a partir de dados.js, menu no celular, seção atual no menu
+sw.js             Remove o service worker da v1 para quem já visitou o site (não registra cache)
+assets/
+  favicon.svg, apple-touch-icon.png, og-image.png
+  fonts/          Newsreader, IBM Plex Sans e IBM Plex Mono (SIL Open Font License, textos incluídos)
+  img/projetos/   Telas reais dos sites publicados
+```
 
----
+## Adicionar ou editar conteúdo
 
-Feito por **Pedro Azevedo** · 2026
+Projetos e trabalhos de design ficam em `dados.js`. Um item só aparece na página quando tem
+`publicado: true` e os campos essenciais preenchidos; caso contrário, fica oculto.
+
+**Novo projeto:** copie o modelo `novo-projeto` no fim da lista `projetos`, preencha os campos e troque
+`publicado` para `true`.
+
+- `formato: "estudo"` exige imagens; use `"ficha"` para um projeto sem telas.
+- `autoria.tipo`: `"individual"`, `"equipe"` ou `"repositorio"`. Em projetos de equipe, descreva só a
+  sua contribuição em `autoria.detalhe` e `contribuicao`.
+- Imagens em `assets/img/projetos/`, de preferência em WebP, com `largura`, `altura` e `alt`.
+
+**Trabalho de design:** adicione um item em `design.trabalhos` com `area` igual a um dos ids de
+`design.areas` (`identidade`, `logotipos`, `catalogos`, `divulgacao`) e a imagem em `assets/img/design/`.
+Enquanto uma área não tiver trabalhos, o bloco mostra apenas a descrição.
+
+Textos fixos (apresentação, Sobre, Experiência, Contato) estão direto no `index.html`.
+
+## Acessibilidade e privacidade
+
+- HTML semântico, link para pular ao conteúdo, foco visível e menu operável por teclado (Esc fecha).
+- Contraste de texto dentro do nível AA; sem JavaScript, o menu continua visível e a seção de projetos
+  mostra um aviso com link para o GitHub.
+- Animação única nos conectores do fluxo, desativada com `prefers-reduced-motion`.
+- Sem scripts de terceiros, rastreadores ou fontes externas. A política de conteúdo (CSP) fica em uma
+  meta tag no `index.html`.

@@ -1,796 +1,350 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#00bfff" />
-  <meta name="description" content="Pedro Azevedo — Desenvolvedor Full Stack em início de carreira. Estagiário em Análise de Sistemas, com foco em React, Node.js e integrações com IA." />
-  <meta name="keywords" content="Pedro Azevedo, desenvolvedor, full stack, react, node.js, portfolio, junior dev, estagiário" />
-  <meta name="author" content="Pedro Azevedo" />
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; font-src 'self'; style-src 'self'; script-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
 
-  <!-- Open Graph -->
-  <meta property="og:type" content="website" />
-  <meta property="og:locale" content="pt_BR" />
-  <meta property="og:title" content="Pedro Azevedo — Desenvolvedor Full Stack" />
-  <meta property="og:description" content="Portfólio de Pedro Azevedo. Projetos em React, Node.js, PostgreSQL e integrações com IA." />
-  <meta property="og:image" content="img/og-image.svg" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
-  <meta property="og:url" content="https://pedroazevedo.dev" />
+    <title>Pedro Azevedo Ferreira · Desenvolvimento, automação e integrações</title>
+    <meta name="description" content="Portfólio de Pedro Azevedo Ferreira: desenvolvimento, automação de processos, integrações e APIs, com experiência em front-end, UX/UI e design gráfico. São Gonçalo, RJ.">
+    <meta name="author" content="Pedro Azevedo Ferreira">
+    <link rel="canonical" href="https://pedroazevedoferreira.github.io/portfolio/">
+    <meta name="theme-color" content="#f5f4f0">
+    <meta name="color-scheme" content="light">
 
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Pedro Azevedo — Desenvolvedor Full Stack" />
-  <meta name="twitter:description" content="Portfólio de Pedro Azevedo. Projetos em React, Node.js, PostgreSQL e integrações com IA." />
-  <meta name="twitter:image" content="img/og-image.svg" />
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:site_name" content="Pedro Azevedo Ferreira">
+    <meta property="og:title" content="Pedro Azevedo Ferreira · Desenvolvimento, automação e integrações">
+    <meta property="og:description" content="Automação de processos, integrações, APIs e back-end, com experiência em front-end, UX/UI e design gráfico.">
+    <meta property="og:url" content="https://pedroazevedoferreira.github.io/portfolio/">
+    <meta property="og:image" content="https://pedroazevedoferreira.github.io/portfolio/assets/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Pedro Azevedo Ferreira: desenvolvimento, automação e integrações.">
+    <meta name="twitter:card" content="summary_large_image">
 
-  <!-- Favicon SVG inline -->
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%2348cae4'/%3E%3Cstop offset='1' stop-color='%230077b6'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='22' fill='url(%23g)'/%3E%3Ctext x='50' y='66' text-anchor='middle' font-family='-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif' font-size='52' font-weight='800' fill='white'%3EP%3C/text%3E%3C/svg%3E" />
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 
-  <title>Pedro Azevedo — Desenvolvedor Full Stack</title>
-  <link rel="stylesheet" href="style.css" />
+    <link rel="preload" href="assets/fonts/newsreader-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="assets/fonts/plex-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="styles.css">
 
-  <!-- PWA -->
-  <link rel="manifest" href="manifest.json" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="Pedro Azevedo" />
+    <script src="dados.js" defer></script>
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
 
-  <!-- Schema.org Person -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Pedro Azevedo",
-    "jobTitle": "Desenvolvedor Full Stack",
-    "url": "https://pedroazevedo.dev",
-    "image": "img/pedro.png",
-    "email": "pedroazevedoferreira2006@gmail.com",
-    "worksFor": { "@type": "Organization", "name": "Microware" },
-    "alumniOf": [
-      { "@type": "EducationalOrganization", "name": "SENAI" },
-      { "@type": "CollegeOrUniversity", "name": "Universidade Veiga de Almeida" }
-    ],
-    "sameAs": [
-      "https://github.com/pedroazevedoferreira",
-      "https://www.linkedin.com/in/pedro-azevedo-986143302/"
-    ],
-    "knowsAbout": ["React", "Node.js", "TypeScript", "PostgreSQL", "Python", "REST APIs"]
-  }
-  </script>
-</head>
-<body>
-
-  <!-- PROGRESS BAR -->
-  <div class="progress-bar" id="progress-bar"></div>
-
-  <!-- CURSOR CUSTOMIZADO -->
-  <div class="cursor-dot" id="cursor-dot"></div>
-  <div class="cursor-ring" id="cursor-ring"></div>
-
-  <!-- NAV -->
-  <nav class="nav" id="nav">
-    <div class="nav-inner">
-      <span class="nav-logo">pedro.dev</span>
-      <ul class="nav-links">
-        <li><a href="#sobre" data-i18n="nav.about">Sobre</a></li>
-        <li><a href="#skills" data-i18n="nav.skills">Skills</a></li>
-        <li><a href="#experiencia" data-i18n="nav.path">Trajetória</a></li>
-        <li><a href="#certificados" data-i18n="nav.certs">Certificados</a></li>
-        <li><a href="#projetos" data-i18n="nav.projects">Projetos</a></li>
-        <li><a href="#contato" data-i18n="nav.contact">Contato</a></li>
-        <span class="nav-indicator" id="nav-indicator"></span>
-      </ul>
-      <button class="cmdk-hint" id="cmdk-hint" aria-label="Abrir busca" title="Busca rápida">
-        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        <kbd>Ctrl</kbd><kbd>K</kbd>
-      </button>
-      <button class="lang-toggle" id="lang-toggle" aria-label="Alternar idioma" title="Idioma">
-        <span class="lang-current">PT</span>
-      </button>
-      <button class="theme-toggle" id="theme-toggle" aria-label="Alternar tema">
-        <svg class="icon-sun" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
-        <svg class="icon-moon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-      </button>
-      <button class="hamburger" id="hamburger" aria-label="Menu">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-  </nav>
-
-  <!-- HERO -->
-  <section class="hero section-decorated" id="hero">
-    <!-- Decoração de fundo -->
-    <div class="bg-grid" aria-hidden="true"></div>
-    <div class="bg-orb bg-orb-1" aria-hidden="true"></div>
-    <div class="bg-orb bg-orb-2" aria-hidden="true"></div>
-    <div class="floating-symbols" aria-hidden="true">
-      <span class="float-symbol" style="top:14%; left:4%; animation-delay:0s;">&lt;/&gt;</span>
-      <span class="float-symbol" style="top:72%; left:8%; animation-delay:1.4s;">{ }</span>
-      <span class="float-symbol" style="top:30%; right:6%; animation-delay:2.6s;">=&gt;</span>
-      <span class="float-symbol" style="top:84%; right:14%; animation-delay:3.8s;">;</span>
-      <span class="float-symbol" style="top:8%; left:46%; animation-delay:.7s;">( )</span>
-      <span class="float-symbol" style="top:88%; left:42%; animation-delay:2.1s;">[ ]</span>
-    </div>
-    <div class="particles" aria-hidden="true" id="particles"></div>
-    <div class="mesh" aria-hidden="true">
-      <div class="mesh-blob mesh-blob-1"></div>
-      <div class="mesh-blob mesh-blob-2"></div>
-      <div class="mesh-blob mesh-blob-3"></div>
-    </div>
-
-    <div class="hero-inner">
-    <div class="hero-content">
-      <p class="hero-greeting">Olá, eu sou</p>
-      <h1 class="hero-name">Pedro Azevedo</h1>
-      <p class="hero-role">Desenvolvedor <span class="typed" id="typed"></span></p>
-      <p class="hero-desc">
-        Apaixonado por criar experiências digitais elegantes e funcionais.
-        Transformo ideias em código limpo e eficiente.
-      </p>
-      <div class="hero-actions">
-        <a href="#projetos" class="btn btn-primary">Ver projetos</a>
-        <a href="#contato" class="btn btn-outline">Fale comigo</a>
-        <a href="#" class="btn btn-ghost" download>
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          Baixar CV
+    <header class="site-header">
+      <div class="wrap header-inner">
+        <a class="brand" href="#topo">
+          <span class="brand-name">Pedro Azevedo Ferreira</span>
+          <span class="brand-role">Desenvolvimento · Automação · UX/UI</span>
         </a>
+
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="menu-principal">
+          <span class="nav-toggle-label">Menu</span>
+          <span class="nav-toggle-icon" aria-hidden="true"></span>
+        </button>
+
+        <nav class="site-nav" id="menu-principal" aria-label="Principal">
+          <ul>
+            <li><a href="#sobre">Sobre</a></li>
+            <li><a href="#experiencia">Experiência</a></li>
+            <li><a href="#projetos">Projetos</a></li>
+            <li><a href="#design">Design</a></li>
+            <li><a href="#contato">Contato</a></li>
+          </ul>
+        </nav>
       </div>
-    </div>
-    <div class="hero-visual">
-      <div class="avatar-ring">
-        <div class="avatar">
-          <img src="img/pedro.png" alt="Pedro Azevedo" />
-        </div>
-      </div>
-      <div class="blob blob-1"></div>
-      <div class="blob blob-2"></div>
-    </div>
-    </div><!-- /hero-inner -->
-    <div class="scroll-hint">
-      <span></span>
-    </div>
-  </section>
+    </header>
 
-  <!-- SOBRE -->
-  <section class="section" id="sobre">
-    <div class="container">
-      <h2 class="section-title">Sobre mim</h2>
-      <div class="sobre-grid">
-        <div class="sobre-text">
-          <p>
-            Sou um desenvolvedor em início de carreira, movido pela curiosidade e pela vontade de
-            aprender. Gosto de resolver problemas complexos com soluções simples e bem estruturadas.
-          </p>
-          <p>
-            Cursei o Técnico em Desenvolvimento de Sistemas no SENAI e atualmente sigo aprofundando
-            os estudos na graduação em Ciência da Computação na UVA, em paralelo com projetos
-            pessoais que cobrem desde front-end com React até integrações com IA.
-          </p>
-          <p>
-            Hoje atuo como estagiário em Análise de Sistemas na Microware, onde trabalho com
-            automação de processos e soluções internas — uma rotina que me permite aplicar o que
-            estudo e aprender com problemas reais de negócio.
-          </p>
-          <div class="sobre-stats">
-            <div class="stat">
-              <span class="stat-num" data-target="3" data-suffix="+">0</span>
-              <span class="stat-label">Projetos</span>
-            </div>
-            <div class="stat">
-              <span class="stat-num" data-target="2" data-suffix="+">0</span>
-              <span class="stat-label">Anos estudando</span>
-            </div>
-            <div class="stat">
-              <span class="stat-num" data-target="8" data-suffix="+">0</span>
-              <span class="stat-label">Tecnologias</span>
-            </div>
-            <div class="stat">
-              <span class="stat-num" data-target="100" data-suffix="%">0</span>
-              <span class="stat-label">Dedicação</span>
-            </div>
-          </div>
-        </div>
-        <div class="sobre-card">
-          <div class="info-list">
-            <div class="info-item">
-              <span class="info-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg></span>
-              <span>Brasil</span>
-            </div>
-            <div class="info-item">
-              <span class="info-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/><path d="M22 10v6"/><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/></svg></span>
-              <span>Ciência da Computação</span>
-            </div>
-            <div class="info-item">
-              <span class="info-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12h.01"/><path d="M16 6V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><path d="M22 13a18.15 18.15 0 0 1-20 0"/><rect width="20" height="14" x="2" y="6" rx="2"/></svg></span>
-              <span>Estagiário em Análise de Sistemas</span>
-            </div>
-            <div class="info-item">
-              <span class="info-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg></span>
-              <span>Inglês técnico</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+    <main id="conteudo" tabindex="-1">
+      <!-- Apresentação -->
+      <section class="hero" id="topo" aria-labelledby="hero-titulo">
+        <div class="wrap grid">
+          <p class="eyebrow hero-eyebrow">Portfólio · São Gonçalo, Rio de Janeiro</p>
 
-  <!-- SKILLS -->
-  <section class="section section-dark" id="skills">
-    <div class="container">
-      <h2 class="section-title">Skills</h2>
-      <div class="skills-categories">
+          <h1 class="hero-title" id="hero-titulo">
+            Automação, integrações e back-end, <em>com olhar de design.</em>
+          </h1>
 
-        <div class="skill-category">
-          <h3>Frontend</h3>
-          <div class="skill-tags">
-            <span class="tag">HTML5</span>
-            <span class="tag">CSS3</span>
-            <span class="tag">JavaScript</span>
-            <span class="tag">React</span>
-            <span class="tag">TypeScript</span>
-            <span class="tag">Tailwind CSS</span>
-          </div>
-        </div>
-
-        <div class="skill-category">
-          <h3>Backend</h3>
-          <div class="skill-tags">
-            <span class="tag">Node.js</span>
-            <span class="tag">Python</span>
-            <span class="tag">REST APIs</span>
-            <span class="tag">SQL</span>
-          </div>
-        </div>
-
-        <div class="skill-category">
-          <h3>Ferramentas</h3>
-          <div class="skill-tags">
-            <span class="tag">Git</span>
-            <span class="tag">GitHub</span>
-            <span class="tag">VS Code</span>
-            <span class="tag">Figma</span>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- MARQUEE TECNOLOGIAS -->
-  <section class="marquee-section" aria-label="Tecnologias">
-    <div class="marquee">
-      <div class="marquee-track">
-        <span class="marquee-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" alt="" loading="lazy"/>React</span>
-        <span class="marquee-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg" alt="" loading="lazy"/>Node.js</span>
-        <span class="marquee-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg" alt="" loading="lazy"/>TypeScript</span>
-        <span class="marquee-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg" alt="" loading="lazy"/>PostgreSQL</span>
-        <span class="marquee-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" alt="" loading="lazy"/>Python</span>
-        <span class="marquee-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nextjs/nextjs-original.svg" alt="" loading="lazy" class="invert-on-dark"/>Next.js</span>
-        <span class="marquee-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg" alt="" loading="lazy"/>Tailwind</span>
-        <span class="marquee-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mongodb/mongodb-original.svg" alt="" loading="lazy"/>MongoDB</span>
-        <span class="marquee-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/firebase/firebase-plain.svg" alt="" loading="lazy"/>Firebase</span>
-        <span class="marquee-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg" alt="" loading="lazy"/>Docker</span>
-        <span class="marquee-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" alt="" loading="lazy"/>Git</span>
-        <span class="marquee-item"><img src="https://cdn.simpleicons.org/vercel/ffffff" alt="" loading="lazy"/>Vercel</span>
-        <!-- Duplicado para loop infinito -->
-        <span class="marquee-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" alt="" loading="lazy"/>React</span>
-        <span class="marquee-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg" alt="" loading="lazy"/>Node.js</span>
-        <span class="marquee-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg" alt="" loading="lazy"/>TypeScript</span>
-        <span class="marquee-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg" alt="" loading="lazy"/>PostgreSQL</span>
-        <span class="marquee-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" alt="" loading="lazy"/>Python</span>
-        <span class="marquee-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nextjs/nextjs-original.svg" alt="" loading="lazy" class="invert-on-dark"/>Next.js</span>
-        <span class="marquee-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg" alt="" loading="lazy"/>Tailwind</span>
-        <span class="marquee-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mongodb/mongodb-original.svg" alt="" loading="lazy"/>MongoDB</span>
-        <span class="marquee-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/firebase/firebase-plain.svg" alt="" loading="lazy"/>Firebase</span>
-        <span class="marquee-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg" alt="" loading="lazy"/>Docker</span>
-        <span class="marquee-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" alt="" loading="lazy"/>Git</span>
-        <span class="marquee-item"><img src="https://cdn.simpleicons.org/vercel/ffffff" alt="" loading="lazy"/>Vercel</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- EXPERIÊNCIA / TIMELINE -->
-  <section class="section" id="experiencia">
-    <div class="container">
-      <h2 class="section-title">Trajetória</h2>
-      <div class="timeline" id="timeline">
-
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="timeline-content">
-            <span class="timeline-date">2026 — Atual</span>
-            <h3>Estagiário em Análise de Sistemas</h3>
-            <p class="timeline-org">Microware</p>
-            <p>Atuo com automação de processos e desenvolvimento de soluções internas, buscando otimizar fluxos e aumentar a eficiência operacional.</p>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="timeline-content">
-            <span class="timeline-date">2024 — Atual</span>
-            <h3>Graduação em Ciência da Computação</h3>
-            <p class="timeline-org">UVA — Universidade Veiga de Almeida</p>
-            <p>Estudos em algoritmos, estruturas de dados e fundamentos da computação, com aplicação prática em projetos pessoais.</p>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="timeline-content">
-            <span class="timeline-date">2024 — 2025</span>
-            <h3>Técnico em Desenvolvimento de Sistemas</h3>
-            <p class="timeline-org">SENAI</p>
-            <p>Formação voltada ao desenvolvimento de software, com foco em lógica, banco de dados e aplicações web. Participação em projetos práticos com resolução de problemas reais.</p>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="timeline-content">
-            <span class="timeline-date">2023</span>
-            <h3>Ensino Médio &amp; Inglês</h3>
-            <p class="timeline-org">ICBEU</p>
-            <p>Formação em inglês ao longo de 7 anos, com boa leitura e compreensão de documentação técnica.</p>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- CERTIFICADOS -->
-  <section class="section section-dark" id="certificados">
-    <div class="container">
-      <h2 class="section-title">Certificados & Cursos</h2>
-      <div class="certs-grid">
-
-        <!-- Substitua os cards abaixo pelos cursos/certificados que você concluiu de fato. -->
-
-        <div class="cert-card">
-          <div class="cert-badge">SI</div>
-          <div class="cert-info">
-            <h3>Técnico em Desenvolvimento de Sistemas</h3>
-            <p>SENAI · 2025</p>
-            <span class="cert-hours">Concluído</span>
-          </div>
-        </div>
-
-        <div class="cert-card">
-          <div class="cert-badge">IC</div>
-          <div class="cert-info">
-            <h3>Inglês — Intermediário/Avançado</h3>
-            <p>ICBEU · 7 anos</p>
-            <span class="cert-hours">Concluído</span>
-          </div>
-        </div>
-
-        <div class="cert-card">
-          <div class="cert-badge">UV</div>
-          <div class="cert-info">
-            <h3>Bacharelado em Ciência da Computação</h3>
-            <p>UVA · em andamento</p>
-            <span class="cert-hours">Cursando</span>
-          </div>
-        </div>
-
-        <div class="cert-card">
-          <div class="cert-badge">+</div>
-          <div class="cert-info">
-            <h3>Em construção</h3>
-            <p>Novos cursos chegando · 2026</p>
-            <span class="cert-hours">Em breve</span>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- SOFT SKILLS / COMO TRABALHO -->
-  <section class="section" id="como-trabalho">
-    <div class="container">
-      <h2 class="section-title">Como eu trabalho</h2>
-      <div class="soft-grid">
-
-        <div class="soft-card">
-          <div class="soft-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="22" x2="18" y1="12" y2="12"/><line x1="6" x2="2" y1="12" y2="12"/><line x1="12" x2="12" y1="6" y2="2"/><line x1="12" x2="12" y1="22" y2="18"/></svg></div>
-          <h3>Foco em entregas</h3>
-          <p>Quebro problemas grandes em pedaços pequenos e entrego em ciclos curtos. Prefiro feedback constante a perfeccionismo no escuro.</p>
-        </div>
-
-        <div class="soft-card">
-          <div class="soft-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></svg></div>
-          <h3>Comunicação clara</h3>
-          <p>Não tenho medo de pedir ajuda nem de fazer perguntas óbvias. Documento decisões e mantenho o time atualizado sem ruído.</p>
-        </div>
-
-        <div class="soft-card">
-          <div class="soft-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg></div>
-          <h3>Aprendizado contínuo</h3>
-          <p>Estou sempre estudando — entre a graduação, o estágio e os projetos pessoais. Tecnologia muda rápido, e curiosidade é o que mantém a gente em dia.</p>
-        </div>
-
-        <div class="soft-card">
-          <div class="soft-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></svg></div>
-          <h3>Atenção ao detalhe</h3>
-          <p>Reviso meu próprio código antes de abrir PR. Acredito que pixel perfect e código limpo andam juntos.</p>
-        </div>
-
-        <div class="soft-card">
-          <div class="soft-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg></div>
-          <h3>Mentalidade de produto</h3>
-          <p>Entendo que código serve ao usuário, não o contrário. Antes de codar, busco entender o problema e o impacto da solução.</p>
-        </div>
-
-        <div class="soft-card">
-          <div class="soft-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></svg></div>
-          <h3>Adaptabilidade</h3>
-          <p>Entre estágio, faculdade e projetos pessoais, já passei por contextos bem diferentes. Me adapto rápido a stacks novas, processos diferentes e prazos curtos.</p>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- PROJETOS -->
-  <section class="section section-dark" id="projetos">
-    <div class="container">
-      <h2 class="section-title">Projetos</h2>
-      <div class="projects-grid">
-
-        <article class="project-card" data-project="taskflow"
-          data-title="TaskFlow"
-          data-icon="✅"
-          data-problem="Times pequenos perdiam tempo organizando tarefas em planilhas e mensagens dispersas, sem visibilidade de prioridades nem histórico."
-          data-solution="App full-stack com autenticação JWT, painel individual por usuário, filtros por status/data e atualização em tempo real. Backend em Node.js com PostgreSQL."
-          data-learnings="Aprofundei autenticação segura com JWT e refresh tokens, modelagem relacional no PostgreSQL e arquitetura de pastas escalável no React.">
-          <!-- PLACEHOLDER: substituir por <img src="img/taskflow.png" alt="..." loading="lazy"> -->
-          <div class="project-preview project-preview-taskflow" aria-hidden="true">
-            <div class="preview-bar">
-              <span class="preview-dot"></span><span class="preview-dot"></span><span class="preview-dot"></span>
-            </div>
-            <div class="preview-body">
-              <div class="preview-task done">✓ Subir API de tarefas</div>
-              <div class="preview-task done">✓ Implementar autenticação JWT</div>
-              <div class="preview-task progress">→ Filtros por status e data</div>
-              <div class="preview-task">○ Painel individual por usuário</div>
-              <div class="preview-task">○ Notificações em tempo real</div>
-            </div>
-          </div>
-          <div class="project-header">
-            <span class="project-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 5h8"/><path d="M13 12h8"/><path d="M13 19h8"/><path d="m3 17 2 2 4-4"/><rect x="3" y="4" width="6" height="6" rx="1"/></svg></span>
-            <div class="project-links">
-              <a href="https://github.com/pedroazevedoferreira" target="_blank" rel="noopener" title="GitHub" class="project-link">
-                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
-              </a>
-              <a href="#" title="Demo" class="project-link">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-              </a>
-            </div>
-          </div>
-          <h3>TaskFlow</h3>
-          <p>Aplicação de gerenciamento de tarefas com autenticação JWT, filtros por status e data e painel individual por usuário.</p>
-          <div class="project-stack">
-            <span class="stack-tag">React</span>
-            <span class="stack-tag">Node.js</span>
-            <span class="stack-tag">PostgreSQL</span>
-            <span class="stack-tag">JWT</span>
-          </div>
-        </article>
-
-        <article class="project-card" data-project="api"
-          data-title="Projeto API"
-          data-icon="🌐"
-          data-problem="Praticar consumo de APIs externas com tratamento robusto de erros, loading states e cache de requisições."
-          data-solution="SPA em React que consome API REST em tempo real, com busca dinâmica, debounce no input e interface totalmente responsiva."
-          data-learnings="Padrões de fetch com async/await, tratamento de erros, debounce, useEffect com cleanup e composição de hooks customizados.">
-          <!-- PLACEHOLDER: substituir por <img src="img/api.png" alt="..." loading="lazy"> -->
-          <div class="project-preview project-preview-api" aria-hidden="true">
-            <div class="preview-bar">
-              <span class="preview-dot"></span><span class="preview-dot"></span><span class="preview-dot"></span>
-            </div>
-            <div class="preview-body preview-code">
-              <span class="code-line"><span class="code-key">GET</span> <span class="code-url">/api/v1/data</span></span>
-              <span class="code-line code-comment">// 200 OK · 142ms</span>
-              <span class="code-line"><span class="code-brace">{</span></span>
-              <span class="code-line">  <span class="code-prop">"status"</span>: <span class="code-str">"success"</span>,</span>
-              <span class="code-line">  <span class="code-prop">"results"</span>: <span class="code-num">42</span>,</span>
-              <span class="code-line">  <span class="code-prop">"data"</span>: [...]</span>
-              <span class="code-line"><span class="code-brace">}</span></span>
-            </div>
-          </div>
-          <div class="project-header">
-            <span class="project-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg></span>
-            <div class="project-links">
-              <a href="https://github.com/pedroazevedoferreira" target="_blank" rel="noopener" title="GitHub" class="project-link">
-                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
-              </a>
-              <a href="#" title="Demo" class="project-link">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-              </a>
-            </div>
-          </div>
-          <h3>Projeto API</h3>
-          <p>Aplicação que consome uma API externa em tempo real, com busca dinâmica e interface responsiva. <em>(Aguardando definição da API utilizada)</em></p>
-          <div class="project-stack">
-            <span class="stack-tag">React</span>
-            <span class="stack-tag">JavaScript</span>
-            <span class="stack-tag">REST API</span>
-          </div>
-        </article>
-
-        <article class="project-card" data-project="doctalk"
-          data-title="DocTalk"
-          data-icon="📄"
-          data-problem="Buscar informações específicas em PDFs longos é demorado. Ler todo o documento pra encontrar uma resposta pontual não escala."
-          data-solution="Plataforma onde o usuário faz upload de um PDF/TXT e conversa com ele. A IA usa apenas o conteúdo do documento como contexto e responde via streaming em tempo real."
-          data-learnings="Integração com a Anthropic API, streaming de respostas com Server-Sent Events, parsing de PDFs no servidor e UX de chat com mensagens incrementais.">
-          <!-- PLACEHOLDER: substituir por <img src="img/doctalk.png" alt="..." loading="lazy"> -->
-          <div class="project-preview project-preview-doctalk" aria-hidden="true">
-            <div class="preview-bar">
-              <span class="preview-dot"></span><span class="preview-dot"></span><span class="preview-dot"></span>
-            </div>
-            <div class="preview-body preview-chat">
-              <div class="chat-msg user">Qual é o tema central do documento?</div>
-              <div class="chat-msg ai"><span class="dot-a"></span><span class="dot-a"></span><span class="dot-a"></span></div>
-              <div class="chat-msg ai-text">O documento trata de boas práticas em arquitetura de software, com foco em...</div>
-            </div>
-          </div>
-          <div class="project-header">
-            <span class="project-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"/><path d="M14 2v5a1 1 0 0 0 1 1h5"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg></span>
-            <div class="project-links">
-              <a href="https://github.com/pedroazevedoferreira" target="_blank" rel="noopener" title="GitHub" class="project-link">
-                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
-              </a>
-              <a href="#" title="Demo" class="project-link">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-              </a>
-            </div>
-          </div>
-          <h3>DocTalk</h3>
-          <p>Faça upload de um PDF ou arquivo de texto e converse com ele. A IA lê o documento e responde perguntas com base apenas no conteúdo enviado, com respostas em tempo real via streaming.</p>
-          <div class="project-stack">
-            <span class="stack-tag">React</span>
-            <span class="stack-tag">Node.js</span>
-            <span class="stack-tag">PostgreSQL</span>
-            <span class="stack-tag">Anthropic API</span>
-          </div>
-        </article>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ATUALMENTE -->
-  <section class="section" id="agora">
-    <div class="container">
-      <h2 class="section-title">Atualmente</h2>
-      <div class="now-grid">
-
-        <div class="now-card">
-          <div class="now-header">
-            <span class="now-pulse"></span>
-            <span class="now-label">Estudando</span>
-          </div>
-          <h3>TypeScript Avançado</h3>
-          <p>Generics, conditional types e type inference para projetos full-stack mais robustos.</p>
-        </div>
-
-        <div class="now-card">
-          <div class="now-header">
-            <span class="now-pulse"></span>
-            <span class="now-label">Lendo</span>
-          </div>
-          <h3>Clean Code — Robert Martin</h3>
-          <p>Aplicando princípios de código limpo no projeto DocTalk e em refatorações no estágio.</p>
-        </div>
-
-        <div class="now-card">
-          <div class="now-header">
-            <span class="now-pulse"></span>
-            <span class="now-label">Ouvindo</span>
-          </div>
-          <h3>Lo-fi & Synthwave</h3>
-          <p>Trilha sonora padrão pra programar. Recomendação: Chillhop Radio no YouTube.</p>
-        </div>
-
-        <div class="now-card">
-          <div class="now-header">
-            <span class="now-pulse"></span>
-            <span class="now-label">Construindo</span>
-          </div>
-          <h3>Próximo projeto pessoal</h3>
-          <p>Um sistema de revisão espaçada com IA para estudar — ainda em planejamento.</p>
-        </div>
-
-      </div>
-
-      <!-- GitHub Stats -->
-      <div class="github-stats">
-        <h3 class="gh-title">GitHub em números</h3>
-        <div class="gh-grid">
-          <img src="https://github-readme-stats.vercel.app/api?username=pedroazevedoferreira&show_icons=true&theme=transparent&hide_border=true&title_color=00bfff&icon_color=48cae4&text_color=8888a0&bg_color=00000000" alt="Estatísticas do GitHub" loading="lazy" />
-          <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=pedroazevedoferreira&layout=compact&theme=transparent&hide_border=true&title_color=00bfff&text_color=8888a0&bg_color=00000000" alt="Linguagens mais usadas" loading="lazy" />
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- DEPOIMENTOS -->
-  <section class="section" id="depoimentos">
-    <div class="container">
-      <h2 class="section-title">O que dizem sobre mim</h2>
-      <div class="testimonials-grid">
-
-        <article class="testimonial-card">
-          <div class="quote-mark">"</div>
-          <p>Pedro tem uma curiosidade rara para alguém em início de carreira. Sempre traz perguntas pertinentes e absorve feedback como ninguém. Aposto no futuro dele.</p>
-          <div class="testimonial-author">
-            <div class="avatar-mini">CR</div>
+          <dl class="hero-meta">
             <div>
-              <strong>Carla Ribeiro</strong>
-              <span>Analista Sênior · Microware</span>
+              <dt>Hoje</dt>
+              <dd>Estagiário de Análise de Sistemas na Microware</dd>
+            </div>
+            <div>
+              <dt>Formação</dt>
+              <dd>Ciência da Computação, UVA Tijuca</dd>
+            </div>
+          </dl>
+
+          <div class="hero-lead">
+            <p>
+              Sou Pedro Azevedo Ferreira. Trabalho com desenvolvimento, automação de processos,
+              integração de sistemas e APIs. Também tenho experiência com front-end, UX/UI e design
+              gráfico, e levo esse cuidado com a interface para o que construo.
+            </p>
+            <div class="actions">
+              <a class="button button-primary" href="#projetos">Ver projetos</a>
+              <a class="button button-quiet" href="#contato">Entrar em contato</a>
             </div>
           </div>
-        </article>
-
-        <article class="testimonial-card">
-          <div class="quote-mark">"</div>
-          <p>Estudei com o Pedro no SENAI e fizemos vários projetos juntos. Ele é o tipo de pessoa que entrega sempre antes do prazo e ainda ajuda o resto do time a entender o código.</p>
-          <div class="testimonial-author">
-            <div class="avatar-mini">LM</div>
-            <div>
-              <strong>Lucas Mendes</strong>
-              <span>Colega de turma · SENAI</span>
-            </div>
-          </div>
-        </article>
-
-        <article class="testimonial-card">
-          <div class="quote-mark">"</div>
-          <p>Como professor, raramente vejo um aluno tão proativo. Pedro participa das aulas, traz dúvidas inteligentes e aplica o conteúdo em projetos próprios. Tem perfil técnico e humano.</p>
-          <div class="testimonial-author">
-            <div class="avatar-mini">RS</div>
-            <div>
-              <strong>Prof. Ricardo Souza</strong>
-              <span>Ciência da Computação · UVA</span>
-            </div>
-          </div>
-        </article>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- CONTATO -->
-  <section class="section section-dark section-decorated section-contato" id="contato">
-    <div class="contato-bg" aria-hidden="true">
-      <svg class="contato-waves" viewBox="0 0 1200 200" preserveAspectRatio="none">
-        <path d="M0,100 C300,40 600,160 1200,80 L1200,200 L0,200 Z" fill="#00bfff" opacity=".06"/>
-        <path d="M0,140 C400,80 800,180 1200,120 L1200,200 L0,200 Z" fill="#48cae4" opacity=".05"/>
-      </svg>
-      <div class="bg-orb bg-orb-1"></div>
-      <div class="bg-orb bg-orb-2"></div>
-    </div>
-    <div class="container">
-      <h2 class="section-title">Contato</h2>
-      <p class="contato-sub">Vamos conversar? Estou aberto a novas oportunidades.</p>
-      <div class="contato-grid">
-        <div class="contato-links">
-          <a href="mailto:pedroazevedoferreira2006@gmail.com" class="contato-item">
-            <span class="contato-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-            </span>
-            <div>
-              <strong>E-mail</strong>
-              <span>pedroazevedoferreira2006@gmail.com</span>
-            </div>
-          </a>
-          <a href="https://github.com/pedroazevedoferreira" target="_blank" rel="noopener" class="contato-item">
-            <span class="contato-icon">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
-            </span>
-            <div>
-              <strong>GitHub</strong>
-              <span>github.com/pedroazevedoferreira</span>
-            </div>
-          </a>
-          <a href="https://www.linkedin.com/in/pedro-azevedo-986143302/" target="_blank" rel="noopener" class="contato-item">
-            <span class="contato-icon">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-            </span>
-            <div>
-              <strong>LinkedIn</strong>
-              <span>linkedin.com/in/pedro-azevedo</span>
-            </div>
-          </a>
         </div>
 
-        <!-- Substituir 'YOUR_FORMSPREE_ID' pelo ID gerado em https://formspree.io -->
-        <form class="contato-form" id="contato-form" action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST">
-          <div class="form-group">
-            <label for="nome">Nome</label>
-            <input type="text" id="nome" name="nome" placeholder="Seu nome" required />
+        <figure class="wrap flow" aria-labelledby="flow-legenda">
+          <ol class="flow-steps">
+            <li class="flow-step">
+              <span class="flow-index">01</span>
+              <strong class="flow-name">Processo</strong>
+              <span class="flow-tools">BPMN · Camunda 7 · Bizagi Studio</span>
+            </li>
+            <li class="flow-step">
+              <span class="flow-index">02</span>
+              <strong class="flow-name">Dados</strong>
+              <span class="flow-tools">SQL Server · JSON · XML</span>
+            </li>
+            <li class="flow-step">
+              <span class="flow-index">03</span>
+              <strong class="flow-name">Integração</strong>
+              <span class="flow-tools">APIs REST · Python · Groovy · MCP</span>
+            </li>
+            <li class="flow-step">
+              <span class="flow-index">04</span>
+              <strong class="flow-name">Interface</strong>
+              <span class="flow-tools">Front-end · UX/UI · Design</span>
+            </li>
+          </ol>
+          <figcaption id="flow-legenda" class="flow-caption">
+            Do processo à interface: as camadas em que trabalho, desenhadas como um fluxo.
+          </figcaption>
+        </figure>
+      </section>
+
+      <!-- 01 Sobre -->
+      <section class="section" id="sobre" aria-labelledby="sobre-titulo">
+        <div class="wrap grid">
+          <header class="section-head">
+            <p class="section-index">01</p>
+            <h2 class="section-title" id="sobre-titulo">Sobre</h2>
+          </header>
+
+          <div class="section-body">
+            <div class="prose prose-large">
+              <p>
+                Estou no 6º período de Ciência da Computação na UVA Tijuca e concluí o curso técnico em
+                Desenvolvimento de Sistemas no SENAI em 2025. Desde fevereiro de 2026, sou estagiário de
+                Análise de Sistemas na Microware, na área de Transformação Digital.
+              </p>
+              <p>
+                Meu foco está no que sustenta um sistema: modelar processos, automatizar etapas, integrar
+                aplicações por APIs e trabalhar com dados. Paralelamente, faço front-end, UX/UI e design
+                gráfico. Essa combinação me ajuda a pensar tanto em como uma solução funciona quanto em
+                como as pessoas vão usá-la.
+              </p>
+            </div>
+
+            <div class="skills" aria-labelledby="competencias-titulo">
+              <h3 class="label" id="competencias-titulo">Competências e ferramentas</h3>
+              <dl class="skills-grid">
+                <div class="skill-group">
+                  <dt>Processos e automação</dt>
+                  <dd>BPMN</dd>
+                  <dd>Camunda 7</dd>
+                  <dd>Bizagi Studio</dd>
+                </div>
+                <div class="skill-group">
+                  <dt>Integração e dados</dt>
+                  <dd>APIs REST</dd>
+                  <dd>JSON e XML</dd>
+                  <dd>SQL Server</dd>
+                </div>
+                <div class="skill-group">
+                  <dt>Linguagens</dt>
+                  <dd>Python</dd>
+                  <dd>Groovy</dd>
+                  <dd>SQL</dd>
+                </div>
+                <div class="skill-group">
+                  <dt>IA aplicada</dt>
+                  <dd>Agentes de IA</dd>
+                  <dd>Azure AI Foundry</dd>
+                  <dd>MCP</dd>
+                </div>
+                <div class="skill-group">
+                  <dt>Interface</dt>
+                  <dd>HTML, CSS e JavaScript</dd>
+                  <dd>UX/UI</dd>
+                  <dd>Design gráfico</dd>
+                </div>
+                <div class="skill-group">
+                  <dt>Versionamento</dt>
+                  <dd>Git e GitHub</dd>
+                </div>
+              </dl>
+            </div>
           </div>
-          <div class="form-group">
-            <label for="email">E-mail</label>
-            <input type="email" id="email" name="email" placeholder="seu@email.com" required />
+        </div>
+      </section>
+
+      <!-- 02 Experiência -->
+      <section class="section section-tinted" id="experiencia" aria-labelledby="experiencia-titulo">
+        <div class="wrap grid">
+          <header class="section-head">
+            <p class="section-index">02</p>
+            <h2 class="section-title" id="experiencia-titulo">Experiência</h2>
+          </header>
+
+          <div class="section-body">
+            <h3 class="label">Profissional</h3>
+            <ol class="timeline">
+              <li class="timeline-item is-current">
+                <p class="timeline-date"><time datetime="2026-02">fev. 2026</time> – atual</p>
+                <div class="timeline-content">
+                  <h4 class="timeline-org">Microware</h4>
+                  <p class="timeline-role">Estagiário de Análise de Sistemas · Transformação Digital</p>
+                  <ul class="list-dash">
+                    <li>Automação de processos e fluxos de negócio.</li>
+                    <li>Integração entre sistemas.</li>
+                    <li>Consultas SQL.</li>
+                    <li>Soluções com agentes de IA.</li>
+                  </ul>
+                  <p class="note">
+                    Descrevo as atividades em nível geral. Clientes, dados e detalhes de projetos internos
+                    são confidenciais.
+                  </p>
+                </div>
+              </li>
+            </ol>
+
+            <h3 class="label">Formação</h3>
+            <ol class="timeline">
+              <li class="timeline-item is-current">
+                <p class="timeline-date">Em andamento · 6º período</p>
+                <div class="timeline-content">
+                  <h4 class="timeline-org">Ciência da Computação</h4>
+                  <p class="timeline-role">UVA · Universidade Veiga de Almeida, campus Tijuca</p>
+                </div>
+              </li>
+              <li class="timeline-item">
+                <p class="timeline-date">Concluído em <time datetime="2025">2025</time></p>
+                <div class="timeline-content">
+                  <h4 class="timeline-org">Técnico em Desenvolvimento de Sistemas</h4>
+                  <p class="timeline-role">SENAI</p>
+                </div>
+              </li>
+            </ol>
           </div>
-          <div class="form-group">
-            <label for="mensagem">Mensagem</label>
-            <textarea id="mensagem" name="mensagem" rows="4" placeholder="Sua mensagem..." required></textarea>
+        </div>
+      </section>
+
+      <!-- 03 Projetos -->
+      <section class="section" id="projetos" aria-labelledby="projetos-titulo">
+        <div class="wrap grid">
+          <header class="section-head">
+            <p class="section-index">03</p>
+            <h2 class="section-title" id="projetos-titulo">Projetos</h2>
+          </header>
+
+          <div class="section-body">
+            <p class="section-intro">
+              Projetos publicados, com o que fiz em cada um. Quando o trabalho foi feito em equipe,
+              descrevo apenas a minha contribuição.
+            </p>
           </div>
-          <button type="submit" class="btn btn-primary btn-full">Enviar mensagem</button>
-          <p class="form-feedback" id="form-feedback"></p>
-        </form>
-      </div>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer class="footer">
-    <p>Feito com ♥ por <strong>Pedro Azevedo</strong> &nbsp;·&nbsp; 2025</p>
-  </footer>
-
-  <!-- WHATSAPP FLUTUANTE — substituir 5521999999999 pelo seu número (DDI+DDD+número, sem espaços) -->
-  <a href="https://wa.me/5521999999999?text=Oi%20Pedro!%20Vi%20seu%20portf%C3%B3lio%20e%20gostaria%20de%20conversar." target="_blank" rel="noopener" class="whatsapp-btn" aria-label="Falar no WhatsApp" title="Conversar no WhatsApp">
-    <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-  </a>
-
-  <!-- CMD+K BUSCA -->
-  <div class="cmdk-overlay" id="cmdk-overlay">
-    <div class="cmdk" role="dialog" aria-label="Busca rápida">
-      <div class="cmdk-input-wrap">
-        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        <input type="text" id="cmdk-input" placeholder="Buscar seções, projetos, links..." autocomplete="off" />
-        <kbd>ESC</kbd>
-      </div>
-      <div class="cmdk-results" id="cmdk-results"></div>
-      <div class="cmdk-footer">
-        <span><kbd>↑</kbd><kbd>↓</kbd> navegar</span>
-        <span><kbd>↵</kbd> abrir</span>
-        <span><kbd>ESC</kbd> fechar</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- CANVAS PARA CONFETE -->
-  <canvas id="confetti-canvas"></canvas>
-
-  <!-- BACK TO TOP -->
-  <button class="back-to-top" id="back-to-top" aria-label="Voltar ao topo">
-    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
-  </button>
-
-  <!-- MODAL DE PROJETO -->
-  <div class="modal-overlay" id="modal-overlay">
-    <div class="modal" id="modal" role="dialog" aria-modal="true">
-      <button class="modal-close" id="modal-close" aria-label="Fechar">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-      </button>
-      <div class="modal-header">
-        <span class="modal-icon" id="modal-icon"></span>
-        <h3 id="modal-title"></h3>
-      </div>
-      <div class="modal-body">
-        <div class="modal-block">
-          <h4>🎯 Problema</h4>
-          <p id="modal-problem"></p>
         </div>
-        <div class="modal-block">
-          <h4>💡 Solução</h4>
-          <p id="modal-solution"></p>
-        </div>
-        <div class="modal-block">
-          <h4>📚 Aprendizados</h4>
-          <p id="modal-learnings"></p>
-        </div>
-      </div>
-    </div>
-  </div>
 
-  <script src="script.js"></script>
-</body>
+        <div class="wrap" id="lista-projetos">
+          <noscript>
+            <p class="noscript">
+              A lista de projetos usa JavaScript. Você também pode ver meus repositórios no
+              <a href="https://github.com/pedroazevedoferreira">GitHub</a>.
+            </p>
+          </noscript>
+        </div>
+      </section>
+
+      <!-- 04 Design -->
+      <section class="section section-tinted" id="design" aria-labelledby="design-titulo">
+        <div class="wrap grid">
+          <header class="section-head">
+            <p class="section-index">04</p>
+            <h2 class="section-title" id="design-titulo">Design gráfico</h2>
+          </header>
+
+          <div class="section-body">
+            <p class="section-intro">
+              Além do desenvolvimento, faço trabalhos de identidade visual, logotipos, catálogos e
+              materiais de divulgação. É uma parte complementar do meu perfil, e é dela que vem a atenção
+              a hierarquia, tipografia e consistência que levo para as interfaces.
+            </p>
+            <div class="design-areas" id="areas-design"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 05 Contato -->
+      <section class="section contact" id="contato" aria-labelledby="contato-titulo">
+        <div class="wrap grid">
+          <header class="section-head">
+            <p class="section-index">05</p>
+            <h2 class="section-title" id="contato-titulo">Contato</h2>
+          </header>
+
+          <div class="section-body">
+            <p class="contact-title">Vamos conversar.</p>
+            <p class="section-intro">
+              Para oportunidades, projetos ou colaborações, escolha o canal que preferir.
+            </p>
+
+            <ul class="contact-list">
+              <li>
+                <a class="contact-link contact-link-primary" href="https://wa.me/5521965815038" target="_blank" rel="noopener noreferrer">
+                  <span class="contact-channel">WhatsApp</span>
+                  <span class="contact-value">+55 21 96581-5038</span>
+                  <span class="contact-arrow" aria-hidden="true">↗</span>
+                  <span class="visually-hidden">(abre em nova aba)</span>
+                </a>
+              </li>
+              <li>
+                <a class="contact-link" href="mailto:pedroazevedoferreira@hotmail.com">
+                  <span class="contact-channel">E-mail</span>
+                  <span class="contact-value">pedroazevedoferreira@<wbr>hotmail.com</span>
+                  <span class="contact-arrow" aria-hidden="true">→</span>
+                </a>
+              </li>
+              <li>
+                <a class="contact-link" href="https://linkedin.com/in/pedro-azevedo-986143302" target="_blank" rel="noopener noreferrer">
+                  <span class="contact-channel">LinkedIn</span>
+                  <span class="contact-value">in/pedro-azevedo-986143302</span>
+                  <span class="contact-arrow" aria-hidden="true">↗</span>
+                  <span class="visually-hidden">(abre em nova aba)</span>
+                </a>
+              </li>
+              <li>
+                <a class="contact-link" href="https://github.com/pedroazevedoferreira" target="_blank" rel="noopener noreferrer">
+                  <span class="contact-channel">GitHub</span>
+                  <span class="contact-value">pedroazevedoferreira</span>
+                  <span class="contact-arrow" aria-hidden="true">↗</span>
+                  <span class="visually-hidden">(abre em nova aba)</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap footer-inner">
+        <p>© 2026 Pedro Azevedo Ferreira</p>
+        <p>Feito com HTML, CSS e JavaScript, sem frameworks.</p>
+        <a class="footer-top" href="#topo">Voltar ao topo ↑</a>
+      </div>
+    </footer>
+  </body>
 </html>
