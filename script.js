@@ -43,7 +43,6 @@
     const abreFora = externo(url);
     return el("a", { class: classe, href: url, target: abreFora && "_blank", rel: abreFora && "noopener noreferrer" }, [
       rotulo,
-      abreFora ? el("span", { "aria-hidden": "true" }, "↗") : null,
       abreFora ? el("span", { class: "visually-hidden" }, "(abre em nova aba)") : null,
     ]);
   }
@@ -87,77 +86,72 @@
 
     if (!figuras.length) return null;
 
-    return el("figure", { class: "case-media" }, [
-      ...figuras,
+    return el("figure", { class: "project-media" }, [
+      el("div", { class: "project-shots" }, figuras),
       el("figcaption", null, "Telas reais do site publicado, capturadas em computador e celular."),
     ]);
   }
 
-  function montarProjeto(projeto, indice) {
+  /* Bloco de entrada/saída da placa: um título, um parágrafo e/ou uma lista */
+  function blocoIO(direcao, titulo, texto, itens) {
+    return el("div", { class: "io" }, [
+      el("h4", { class: "io-title" }, [direcao ? el("span", { class: "io-dir" }, direcao) : null, titulo]),
+      preenchido(texto) ? el("p", null, texto) : null,
+      preenchido(itens) ? el("ul", { class: "list-bar" }, itens.map((item) => el("li", null, item))) : null,
+    ]);
+  }
+
+  function montarProjeto(projeto) {
     const idTitulo = "projeto-" + projeto.id + "-titulo";
-    const numero = "P." + String(indice + 1).padStart(2, "0");
 
-    const cabecalho = el("header", { class: "case-head grid" }, [
-      el("p", { class: "case-number" }, numero),
-      el("div", { class: "case-heading" }, [
-        preenchido(projeto.categoria) ? el("p", { class: "case-category" }, projeto.categoria) : null,
-        el("h3", { class: "case-title", id: idTitulo }, [
+    const cabecalho = el("header", { class: "project-head" }, [
+      el("div", null, [
+        preenchido(projeto.categoria) ? el("p", { class: "project-category" }, projeto.categoria) : null,
+        el("h3", { class: "project-title", id: idTitulo }, [
           projeto.titulo,
-          preenchido(projeto.subtitulo) ? el("span", { class: "case-subtitle" }, projeto.subtitulo) : null,
+          preenchido(projeto.subtitulo) ? el("span", { class: "project-subtitle" }, projeto.subtitulo) : null,
         ]),
-        el("p", { class: "case-summary" }, projeto.resumo),
       ]),
+      el("p", { class: "seal", "data-tipo": projeto.autoria.tipo }, projeto.autoria.rotulo),
     ]);
 
-    const autoria = el("div", { class: "authorship" }, [
-      el("p", { class: "authorship-type" }, [
-        el("span", { class: "authorship-mark", "data-tipo": projeto.autoria.tipo, "aria-hidden": "true" }),
-        projeto.autoria.rotulo,
-      ]),
-      preenchido(projeto.autoria.detalhe) ? el("p", null, projeto.autoria.detalhe) : null,
+    const resumo = el("div", { class: "project-summary" }, [
+      el("p", null, projeto.resumo),
+      preenchido(projeto.autoria.detalhe) ? el("p", { class: "project-authorship" }, projeto.autoria.detalhe) : null,
     ]);
 
-    const principal = el("div", { class: "case-main" }, [
-      preenchido(projeto.contexto)
-        ? el("div", { class: "case-block" }, [el("h4", null, "Contexto"), el("p", null, projeto.contexto)])
-        : null,
-      preenchido(projeto.contribuicao) || preenchido(projeto.entregas)
-        ? el("div", { class: "case-block" }, [
-            el("h4", null, projeto.tituloEntregas || "O que fiz"),
-            preenchido(projeto.contribuicao) ? el("p", null, projeto.contribuicao) : null,
-            preenchido(projeto.entregas)
-              ? el("ul", { class: "list-dash" }, projeto.entregas.map((item) => el("li", null, item)))
-              : null,
-          ])
-        : null,
-    ]);
+    // Com contexto, a placa mostra entrada (contexto) e saída (o que foi feito); sem ele, só o resultado
+    const temSaida = preenchido(projeto.contribuicao) || preenchido(projeto.entregas);
+    const tituloSaida = projeto.tituloEntregas || "O que fiz";
+    const io = preenchido(projeto.contexto)
+      ? el("div", { class: "project-io" }, [
+          blocoIO("Entrada", "Contexto", projeto.contexto),
+          temSaida ? blocoIO("Saída", tituloSaida, projeto.contribuicao, projeto.entregas) : null,
+        ])
+      : temSaida
+      ? el("div", { class: "project-io project-io-single" }, [
+          blocoIO(null, tituloSaida, projeto.contribuicao, projeto.entregas),
+        ])
+      : null;
 
-    const lateral = el("div", { class: "case-side" }, [
-      el("div", { class: "case-block" }, [
-        el("h4", null, projeto.tituloStack || "Tecnologias"),
-        el("ul", { class: "tags" }, projeto.stack.map((item) => el("li", null, item))),
-        preenchido(projeto.notaStack) ? el("p", { class: "case-note" }, projeto.notaStack) : null,
+    const links = (projeto.links || []).filter((item) => preenchido(item.url));
+    const rodape = el("footer", { class: "project-foot" }, [
+      el("div", { class: "stack" }, [
+        el("p", { class: "stack-line" }, [
+          el("span", { class: "stack-key" }, (projeto.tituloStack || "Tecnologias") + ":"),
+          " " + projeto.stack.join(", "),
+        ]),
+        preenchido(projeto.notaStack) ? el("p", { class: "stack-note" }, projeto.notaStack) : null,
       ]),
-      preenchido(projeto.links)
-        ? el("div", { class: "case-block" }, [
-            el("h4", null, "Links"),
-            el(
-              "ul",
-              { class: "case-links" },
-              projeto.links.filter((item) => preenchido(item.url)).map((item) => el("li", null, link(item.rotulo, item.url)))
-            ),
-          ])
+      links.length
+        ? el("ul", { class: "project-links" }, links.map((item) => el("li", null, link(item.rotulo, item.url, "button button-outline"))))
         : null,
     ]);
 
     return el(
       "article",
-      { class: "case case-" + projeto.formato, id: "projeto-" + projeto.id, "aria-labelledby": idTitulo },
-      [
-        cabecalho,
-        projeto.formato === "estudo" ? montarImagens(projeto) : null,
-        el("div", { class: "case-body grid" }, [el("div", { class: "case-aside" }, autoria), principal, lateral]),
-      ]
+      { class: "project project-" + projeto.formato, id: "projeto-" + projeto.id, "aria-labelledby": idTitulo },
+      [cabecalho, resumo, projeto.formato === "estudo" ? montarImagens(projeto) : null, io, rodape]
     );
   }
 
@@ -166,7 +160,7 @@
     const projetos = (dados.projetos || []).filter(projetoCompleto);
     // Estudos de caso primeiro, fichas curtas depois
     projetos.sort((a, b) => (a.formato === b.formato ? 0 : a.formato === "estudo" ? -1 : 1));
-    projetos.forEach((projeto, indice) => listaProjetos.append(montarProjeto(projeto, indice)));
+    projetos.forEach((projeto) => listaProjetos.append(montarProjeto(projeto)));
   }
 
   /* 1b. Design ------------------------------------------------------------ */
@@ -186,7 +180,7 @@
   if (areasDesign && dados.design) {
     const trabalhos = (dados.design.trabalhos || []).filter(trabalhoCompleto);
 
-    (dados.design.areas || []).forEach((area, indice) => {
+    (dados.design.areas || []).forEach((area) => {
       const daArea = trabalhos.filter((trabalho) => trabalho.area === area.id);
 
       const obras = daArea.length
@@ -210,12 +204,11 @@
               ])
             )
           )
-        : el("p", { class: "design-area-status" }, "Imagens em seleção");
+        : el("div", { class: "media-slot" }, el("p", null, "Imagens em seleção"));
 
       areasDesign.append(
-        el("article", { class: "design-area", id: "design-" + area.id }, [
-          el("span", { class: "design-area-index", "aria-hidden": "true" }, "D." + String(indice + 1).padStart(2, "0")),
-          el("h3", null, area.nome),
+        el("article", { class: "design-plate", id: "design-" + area.id }, [
+          el("h3", { class: "design-plate-title" }, area.nome),
           preenchido(area.descricao) ? el("p", null, area.descricao) : null,
           obras,
         ])

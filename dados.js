@@ -25,7 +25,7 @@ window.PORTFOLIO = {
       publicado: true,
       formato: "estudo",
       titulo: "Ferreira Projetos e Construções",
-      categoria: "Site institucional · Engenharia civil",
+      categoria: "Site institucional de engenharia civil",
       autoria: {
         tipo: "individual",
         rotulo: "Projeto individual",
@@ -76,7 +76,7 @@ window.PORTFOLIO = {
       formato: "estudo",
       titulo: "Sim, Aceito!",
       subtitulo: "Wedding Management",
-      categoria: "Plataforma SaaS · Gestão de casamentos",
+      categoria: "Plataforma SaaS de gestão de casamentos",
       autoria: {
         tipo: "equipe",
         rotulo: "Projeto em equipe",
@@ -133,7 +133,7 @@ window.PORTFOLIO = {
       publicado: true,
       formato: "ficha",
       titulo: "Django Task Manager",
-      categoria: "Aplicação web · Back-end",
+      categoria: "Aplicação web em Django",
       autoria: {
         tipo: "repositorio",
         rotulo: "Repositório no meu GitHub",
