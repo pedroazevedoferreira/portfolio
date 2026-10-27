@@ -275,18 +275,31 @@
 
   /* 4. Limpeza da versão anterior ---------------------------------------- */
 
-  // A primeira versão do site registrava um service worker com cache.
-  // Esta versão não usa cache offline, então remove o registro e os caches antigos.
-  if ("serviceWorker" in navigator) {
-    navigator.serviceWorker
-      .getRegistrations()
-      .then((registros) => registros.forEach((registro) => registro.unregister()))
-      .catch(() => {});
-  }
-  if ("caches" in window) {
-    caches
-      .keys()
-      .then((chaves) => chaves.filter((chave) => chave.startsWith("pedro-portfolio")).forEach((chave) => caches.delete(chave)))
-      .catch(() => {});
-  }
+  // A primeira versão do site registrava um service worker que guardava CSS e JS sem prazo
+  // e os entregava antes da rede: quem visitou a v1 podia ver o HTML novo com o CSS antigo.
+  // Esta versão não usa cache offline: remove o registro, apaga os caches e, se a página
+  // ainda estava sendo servida por esse service worker, recarrega uma única vez.
+  const controlada = "serviceWorker" in navigator && Boolean(navigator.serviceWorker.controller);
+
+  const removerRegistros = "serviceWorker" in navigator
+    ? navigator.serviceWorker.getRegistrations().then((registros) => Promise.all(registros.map((r) => r.unregister())))
+    : Promise.resolve();
+
+  const apagarCaches = "caches" in window
+    ? caches.keys().then((chaves) => Promise.all(chaves.map((chave) => caches.delete(chave))))
+    : Promise.resolve();
+
+  Promise.all([removerRegistros, apagarCaches])
+    .then(() => {
+      if (!controlada) return;
+      let jaRecarregou = false;
+      try {
+        jaRecarregou = sessionStorage.getItem("portfolio-cache-limpo") === "1";
+        sessionStorage.setItem("portfolio-cache-limpo", "1");
+      } catch (erro) {
+        jaRecarregou = true; // sem sessionStorage, não arrisca recarregar em laço
+      }
+      if (!jaRecarregou) location.reload();
+    })
+    .catch(() => {});
 })();
