@@ -432,7 +432,8 @@ main:focus {
   }
 }
 
-@media (max-width: 22.49rem) {
+/* Em telas muito estreitas, só o monograma: nome + botão Menu não cabem */
+@media (max-width: 24.49rem) {
   .brand-name {
     display: none;
   }
