@@ -6,8 +6,9 @@ Publicado no GitHub Pages: https://pedroazevedoferreira.github.io/portfolio/
 
 ## Versões
 
-- `v3` (atual): direção "placa de integração", com abertura em azul capri, tipografia condensada e
-  projetos apresentados como placas de entrada e saída.
+- `v4` (atual): abertura composta a partir de uma imagem de referência: fundo marinho, azul como luz
+  do fluxo processo → API → dados → interface, telas reais em perspectiva sobre uma laje de pedra.
+- `v3`: direção "placa de integração", preservada na tag [`v3`](https://github.com/pedroazevedoferreira/portfolio/tree/v3).
 - `v2`: direção editorial clara, preservada na tag [`v2`](https://github.com/pedroazevedoferreira/portfolio/tree/v2).
 - `v1`: primeira versão do portfólio, preservada na tag [`v1`](https://github.com/pedroazevedoferreira/portfolio/tree/v1).
 
@@ -31,19 +32,32 @@ script.js         Monta projetos e design a partir de dados.js, menu no celular,
 sw.js             Remove o service worker da v1 para quem já visitou o site (não registra cache)
 assets/
   favicon.svg, apple-touch-icon.png, og-image.png
-  fonts/          Big Shoulders Display, Instrument Sans e JetBrains Mono (SIL Open Font License, textos incluídos)
-  img/projetos/   Telas reais dos sites publicados
+  fonts/          Inter Tight, Instrument Sans e JetBrains Mono (SIL Open Font License, textos incluídos)
+  img/projetos/   Telas reais dos sites publicados (a da abertura é a Ferreira no tema escuro, em proporção de tablet)
 ```
 
 ## Sistema visual
 
 Tokens no início de `styles.css`:
 
-- Azul capri `#00BFFF`: só como fundo (abertura, cabeçalho, selos), sempre com texto marinho por cima.
-- Marinho `#031A2B`: texto, bordas de 2 px e faixas. Capri escuro `#0077A8` para links sobre fundo claro.
-- Big Shoulders Display nos títulos, Instrument Sans no texto e JetBrains Mono só em trechos de código.
-- Cada projeto é uma placa: cabeçalho com selo de autoria, telas reais, entrada (contexto), saída
-  (o que foi feito) e a stack no rodapé.
+- Fundo marinho `#04111F` (faixas em `#0A1E33`), divisórias de 1 px em `#17324D`.
+- A abertura é posicionada em "unidades da referência" (`--k`, 1 px de uma imagem de 1586 × 912) com
+  container queries, então mantém a mesma composição em qualquer largura de desktop. A pedra é
+  desenhada em SVG (ruído e iluminação), sem fotografia.
+- Azul `#1E8FF5` é a luz; o botão principal usa `#0073E6` para o texto branco passar no contraste AA. O azul é usado em: linha do fluxo, nós, títulos em destaque e
+  destaques. `#7FDBFF` para links e rótulos; texto em `#EAF4FB` e secundário em `#9DB4C6`.
+- Inter Tight nos títulos, Instrument Sans no texto e JetBrains Mono só na linha de stack.
+- Telas reais em perspectiva (`perspective` + `rotateY`), na abertura e em cada projeto; o lado das
+  telas alterna entre os estudos de caso.
+- Cada projeto é uma estação: selo de autoria, telas, entrada (contexto), saída (o que foi feito) e stack.
+
+## Animação da abertura
+
+Só CSS, uma vez, em cerca de 1,6 s (seção 14 de `styles.css`): a linha acende de "Processo" a
+"Interface", cada nó liga em sequência e a tela da Ferreira entra em perspectiva até se encaixar, com
+o celular logo depois. O estado final é o CSS normal; a animação anima apenas o ponto de partida
+(`animation-fill-mode: backwards`) e só existe com `prefers-reduced-motion: no-preference`. Texto e
+botões aparecem imediatamente e podem ser usados durante a animação.
 
 ## Adicionar ou editar conteúdo
 
@@ -69,6 +83,6 @@ Textos fixos (apresentação, Sobre, Experiência, Contato) estão direto no `in
 - HTML semântico, link para pular ao conteúdo, foco visível e menu operável por teclado (Esc fecha).
 - Contraste de texto dentro do nível AA; sem JavaScript, o menu continua visível e a seção de projetos
   mostra um aviso com link para o GitHub.
-- Animação única no painel JSON da abertura, desativada com `prefers-reduced-motion`.
+- Animação única na abertura (linha e telas), desativada com `prefers-reduced-motion`.
 - Sem scripts de terceiros, rastreadores ou fontes externas. A política de conteúdo (CSP) fica em uma
   meta tag no `index.html`.

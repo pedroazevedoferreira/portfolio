@@ -10,8 +10,8 @@
     <meta name="description" content="Portfólio de Pedro Azevedo Ferreira: desenvolvimento, automação de processos, integrações e APIs, com experiência em front-end, UX/UI e design gráfico. São Gonçalo, RJ.">
     <meta name="author" content="Pedro Azevedo Ferreira">
     <link rel="canonical" href="https://pedroazevedoferreira.github.io/portfolio/">
-    <meta name="theme-color" content="#00bfff">
-    <meta name="color-scheme" content="light">
+    <meta name="theme-color" content="#04111f">
+    <meta name="color-scheme" content="dark">
 
     <meta property="og:type" content="website">
     <meta property="og:locale" content="pt_BR">
@@ -28,7 +28,7 @@
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 
-    <link rel="preload" href="assets/fonts/big-shoulders-display-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="assets/fonts/inter-tight-latin.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="assets/fonts/instrument-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="styles.css">
 
@@ -39,8 +39,14 @@
     <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
 
     <header class="site-header">
-      <div class="wrap header-inner">
-        <a class="brand" href="#topo">Pedro Azevedo Ferreira</a>
+      <div class="header-frame header-inner">
+        <a class="brand" href="#topo" aria-label="Pedro Azevedo Ferreira, início">
+          <svg class="brand-mark" viewBox="0 0 46 28" aria-hidden="true">
+            <path d="M3 27V3h10.5a7.5 7.5 0 0 1 0 15H8.5" fill="none" stroke="#ffffff" stroke-width="5.5"/>
+            <path d="M22 27 32 2.5 43 27" fill="none" stroke="#1e8ff5" stroke-width="5.5" stroke-linejoin="miter"/>
+          </svg>
+          <span class="brand-name">Pedro Azevedo Ferreira</span>
+        </a>
 
         <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="menu-principal">
           <span class="nav-toggle-label">Menu</span>
@@ -50,9 +56,8 @@
         <nav class="site-nav" id="menu-principal" aria-label="Principal">
           <ul>
             <li><a href="#sobre">Sobre</a></li>
-            <li><a href="#experiencia">Experiência</a></li>
             <li><a href="#projetos">Projetos</a></li>
-            <li><a href="#design">Design</a></li>
+            <li><a href="#experiencia">Experiência</a></li>
             <li><a href="#contato">Contato</a></li>
           </ul>
         </nav>
@@ -60,33 +65,85 @@
     </header>
 
     <main id="conteudo" tabindex="-1">
-      <!-- Abertura: placa em azul capri -->
+      <!-- Abertura: composição da referência; a linha acende de processo a interface
+           enquanto as telas reais entram em perspectiva e se encaixam -->
       <section class="hero" id="topo" aria-labelledby="hero-titulo">
-        <div class="wrap hero-grid">
+        <div class="hero-frame">
           <div class="hero-text">
-            <h1 class="hero-title" id="hero-titulo">Pedro Azevedo Ferreira</h1>
-            <p class="hero-lead">
-              Desenvolvimento, automação de processos e integração de sistemas. Também faço
-              front-end, UX/UI e design gráfico, e levo esse cuidado para a interface do que construo.
-            </p>
-            <div class="actions">
-              <a class="button button-solid" href="#projetos">Ver projetos</a>
-              <a class="button button-outline" href="#contato">Falar comigo</a>
-            </div>
+            <h1 class="hero-title" id="hero-titulo">
+              <span class="hero-title-a">Interface bem desenhada.</span>
+              <span class="hero-title-b">Sistema bem pensado.</span>
+            </h1>
+            <p class="hero-lead">Front-end · UX/UI · Back-end</p>
+            <a class="hero-cta" href="#projetos">
+              Ver projetos
+              <svg viewBox="0 0 32 14" aria-hidden="true"><path d="M0 7h30M24 1l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+            </a>
           </div>
 
-          <figure class="hero-panel" aria-labelledby="perfil-legenda">
-            <figcaption class="visually-hidden" id="perfil-legenda">Resumo do perfil em formato JSON</figcaption>
-            <pre class="code"><code><span class="ln"><span class="p">{</span></span>
-<span class="ln">  <span class="k">"atuação"</span><span class="p">:</span> <span class="s">"Análise de Sistemas"</span><span class="p">,</span></span>
-<span class="ln">  <span class="k">"empresa"</span><span class="p">:</span> <span class="s">"Microware"</span><span class="p">,</span></span>
-<span class="ln">  <span class="k">"foco"</span><span class="p">: [</span><span class="s">"automação"</span><span class="p">,</span> <span class="s">"integrações"</span><span class="p">,</span></span>
-<span class="ln">           <span class="s">"APIs"</span><span class="p">,</span> <span class="s">"back-end"</span><span class="p">],</span></span>
-<span class="ln">  <span class="k">"também"</span><span class="p">: [</span><span class="s">"front-end"</span><span class="p">,</span> <span class="s">"UX/UI"</span><span class="p">,</span></span>
-<span class="ln">             <span class="s">"design gráfico"</span><span class="p">],</span></span>
-<span class="ln">  <span class="k">"formação"</span><span class="p">:</span> <span class="s">"Ciência da Computação"</span><span class="p">,</span></span>
-<span class="ln">  <span class="k">"base"</span><span class="p">:</span> <span class="s">"São Gonçalo, RJ"</span></span>
-<span class="ln"><span class="p">}</span></span></code></pre>
+          <figure class="hero-stage" aria-labelledby="palco-legenda">
+            <svg class="hero-art" viewBox="0 0 1586 912" preserveAspectRatio="xMinYMin meet" role="img" aria-labelledby="fluxo-titulo">
+              <title id="fluxo-titulo">Etapas do meu trabalho: processo, API, dados e interface</title>
+              <defs>
+                <filter id="rocha" x="0" y="0" width="100%" height="100%">
+                  <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="6" seed="11" result="ruido"/>
+                  <feDiffuseLighting in="ruido" lighting-color="#8aaee0" surfaceScale="6" result="luz">
+                    <feDistantLight azimuth="235" elevation="34"/>
+                  </feDiffuseLighting>
+                  <feComposite in="luz" in2="SourceGraphic" operator="in" result="textura"/>
+                  <feBlend in="SourceGraphic" in2="textura" mode="multiply"/>
+                </filter>
+                <linearGradient id="rocha-morro" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#4a6c9c"/>
+                  <stop offset="0.6" stop-color="#132238"/>
+                  <stop offset="1" stop-color="#03070f"/>
+                </linearGradient>
+                <linearGradient id="rocha-laje" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#8aa8d0"/>
+                  <stop offset="0.3" stop-color="#2f4769"/>
+                  <stop offset="1" stop-color="#02050b"/>
+                </linearGradient>
+              </defs>
+
+              <!-- Pedras: morro à esquerda e a laje onde as telas se apoiam -->
+              <path class="rock" filter="url(#rocha)" fill="url(#rocha-morro)"
+                d="M0 735 C 90 715, 190 640, 300 590 C 380 552, 430 500, 480 486 C 540 470, 600 470, 650 495 C 710 530, 760 620, 800 740 L 800 912 L 0 912 Z"/>
+              <path class="rock" filter="url(#rocha)" fill="url(#rocha-laje)"
+                d="M548 712 L 1586 752 L 1586 912 L 470 912 C 490 850, 515 760, 548 712 Z"/>
+              <path class="rock" filter="url(#rocha)" fill="#7f9cc4" d="M548 712 L 1586 752 L 1586 770 L 540 730 Z"/>
+              <path class="rock-edge" d="M548 712 L 1586 752" fill="none"/>
+
+              <!-- Fluxo: guias tracejadas, linha base, linha acesa e nós -->
+              <g class="flow-guides">
+                <path d="M570 52V150M835 70V150M1185 124V190M1492 178V250"/>
+              </g>
+              <path class="flow-glow" d="M570 41 C 650 22, 760 30, 835 60 S 1060 110, 1185 114 S 1430 120, 1492 167 C 1530 200, 1522 236, 1470 250 S 1380 262, 1330 268"/>
+              <path class="flow-base" d="M570 41 C 650 22, 760 30, 835 60 S 1060 110, 1185 114 S 1430 120, 1492 167 C 1530 200, 1522 236, 1470 250 S 1380 262, 1330 268"/>
+              <path class="flow-lit" pathLength="1" d="M570 41 C 650 22, 760 30, 835 60 S 1060 110, 1185 114 S 1430 120, 1492 167 C 1530 200, 1522 236, 1470 250 S 1380 262, 1330 268"/>
+              <g class="flow-node n1 node-solid"><circle class="ring" cx="570" cy="41" r="9"/><circle class="dot" cx="570" cy="41" r="9"/></g>
+              <g class="flow-node n2"><circle class="ring" cx="835" cy="60" r="8"/><circle class="dot" cx="835" cy="60" r="3"/></g>
+              <g class="flow-node n3"><circle class="ring" cx="1185" cy="114" r="8"/><circle class="dot" cx="1185" cy="114" r="3"/></g>
+              <g class="flow-node n4 node-solid"><circle class="ring" cx="1492" cy="167" r="9"/><circle class="dot" cx="1492" cy="167" r="9"/></g>
+              <g class="flow-labels" aria-hidden="true">
+                <text class="n1" x="572" y="21">PROCESSO</text>
+                <text class="n2" x="862" y="42">API</text>
+                <text class="n3" x="1185" y="94">DADOS</text>
+                <text class="n4" x="1488" y="143">INTERFACE</text>
+              </g>
+            </svg>
+
+            <div class="device device-tablet">
+              <img src="assets/img/projetos/ferreira-tablet-dark.webp" width="1180" height="976" fetchpriority="high"
+                alt="Página inicial real do site da Ferreira Projetos e Construções, no tema escuro.">
+            </div>
+            <div class="device device-phone">
+              <img src="assets/img/projetos/simaceito-mobile.webp" width="780" height="1688"
+                alt="Página inicial real do Sim, Aceito! em tela de celular.">
+            </div>
+
+            <figcaption class="visually-hidden" id="palco-legenda">
+              Telas reais: Ferreira Projetos e Construções no tablet e Sim, Aceito! no celular.
+            </figcaption>
           </figure>
         </div>
       </section>
