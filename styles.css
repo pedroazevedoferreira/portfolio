@@ -787,7 +787,8 @@ main:focus {
 }
 
 .plate {
-  border-top: 2px solid var(--capri);
+  padding-top: 2px;
+  background: linear-gradient(var(--capri), var(--capri)) top left / 100% 2px no-repeat;
 }
 
 .plate-head {
@@ -1390,9 +1391,14 @@ main:focus {
   color: var(--text);
 }
 
-/* 14. Movimento: uma sequência só, na abertura.
-   O estado final é o CSS acima; aqui só se anima o ponto de partida
-   (fill-mode backwards). Com movimento reduzido nada disto existe. */
+/* 14. Movimento
+   14a. Abertura: uma sequência ao carregar. O estado final é o CSS acima; aqui só se anima
+   o ponto de partida (fill-mode backwards).
+   14b. Ao rolar: cada bloco anima uma vez quando entra na tela (classe .is-visible, posta
+   por script.js). Os estados iniciais só valem com a classe .anima no <html>, que o script
+   só coloca se houver JavaScript, IntersectionObserver e nenhuma preferência por movimento
+   reduzido. Texto nunca fica escondido; só linhas, nós e telas se movem.
+   Com movimento reduzido nada disto existe. */
 @media (prefers-reduced-motion: no-preference) {
   /* A linha acende de "Processo" a "Interface" */
   .flow-lit {
@@ -1461,6 +1467,124 @@ main:focus {
       opacity: 0;
       transform: perspective(1400px) translate3d(14%, 16%, 0) rotateZ(3deg) rotateY(-18deg) rotateX(2deg);
     }
+  }
+}
+
+/* 14b. Ao rolar */
+.anima .section-title::before {
+  transform-origin: left center;
+  transition: transform 0.7s var(--ease);
+}
+
+.anima .section-title:not(.is-visible)::before {
+  transform: scaleX(0);
+}
+
+/* Competências: a barra de cada grupo se preenche, em sequência */
+.anima .plate {
+  transition: background-size 0.8s var(--ease);
+}
+
+.anima .skills-grid:not(.is-visible) .plate {
+  background-size: 0% 2px;
+}
+
+.anima .plate:nth-child(2) { transition-delay: 0.08s; }
+.anima .plate:nth-child(3) { transition-delay: 0.16s; }
+.anima .plate:nth-child(4) { transition-delay: 0.24s; }
+.anima .plate:nth-child(5) { transition-delay: 0.32s; }
+.anima .plate:nth-child(6) { transition-delay: 0.4s; }
+
+/* Experiência: a linha se desenha de cima para baixo e os nós acendem em sequência */
+.anima .timeline::before {
+  transform-origin: center top;
+  transition: transform 1s var(--ease);
+}
+
+.anima .timeline:not(.is-visible)::before {
+  transform: scaleY(0);
+}
+
+.anima .timeline-item::before {
+  transition: transform 0.35s cubic-bezier(0.3, 1.4, 0.5, 1), border-color 0.35s;
+  transition-delay: 0.25s;
+}
+
+.anima .timeline-item:nth-child(2)::before { transition-delay: 0.6s; }
+.anima .timeline-item:nth-child(3)::before { transition-delay: 0.95s; }
+
+.anima .timeline:not(.is-visible) .timeline-item::before {
+  transform: scale(0);
+  border-color: var(--line-strong);
+}
+
+/* Projetos: as telas reais entram em perspectiva e se encaixam, como na abertura */
+.anima .shot-desktop,
+.anima .shot-phone {
+  transition:
+    opacity 0.6s ease-out,
+    translate 1s cubic-bezier(0.2, 0.8, 0.2, 1),
+    rotate 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.anima .shot-phone {
+  transition-delay: 0.2s;
+}
+
+.anima .project-media:not(.is-visible) .shot-desktop {
+  opacity: 0;
+  translate: 6% 0;
+  rotate: y 26deg;
+}
+
+.anima .project-media:not(.is-visible) .shot-phone {
+  opacity: 0;
+  translate: 0 14%;
+}
+
+@media (min-width: 64rem) {
+  .anima .project-estudo:nth-of-type(even) .project-media:not(.is-visible) .shot-desktop {
+    translate: -6% 0;
+    rotate: y -26deg;
+  }
+}
+
+/* Contato: o traço chega ao nó final */
+.anima .contact-title::before {
+  transition: clip-path 0.9s var(--ease);
+}
+
+.anima .contact-title:not(.is-visible)::before {
+  clip-path: inset(0 100% 0 0);
+}
+
+/* Respostas ao ponteiro: só em dispositivos com mouse */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .hero-cta svg {
+    transition: transform 0.25s var(--ease);
+  }
+
+  .hero-cta:hover svg {
+    transform: translateX(0.3rem);
+  }
+
+  .project-media.is-visible:hover .shot-desktop,
+  .project-media.is-visible:hover .shot-phone {
+    transition-delay: 0s;
+  }
+
+  .project-media.is-visible:hover .shot-desktop {
+    rotate: y -6deg;
+  }
+
+  .project-media.is-visible:hover .shot-phone {
+    translate: 0 -0.5rem;
+  }
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) and (min-width: 64rem) {
+  .project-estudo:nth-of-type(even) .project-media.is-visible:hover .shot-desktop {
+    rotate: y 6deg;
   }
 }
 

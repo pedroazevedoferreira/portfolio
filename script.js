@@ -4,6 +4,7 @@
   2. Menu no celular
   3. Destaque da seção atual no menu
   4. Remove o service worker da versão anterior do site
+  5. Animações ao rolar (cada bloco anima uma vez ao entrar na tela)
 */
 
 (function () {
@@ -302,4 +303,29 @@
       if (!jaRecarregou) location.reload();
     })
     .catch(() => {});
+
+  /* 5. Animações ao rolar ------------------------------------------------- */
+
+  // Os estados iniciais ficam no CSS, sob a classe .anima; sem ela tudo aparece pronto.
+  // Por isso a classe só entra quando a animação pode de fato acontecer.
+  const podeAnimar =
+    "IntersectionObserver" in window && window.matchMedia("(prefers-reduced-motion: no-preference)").matches;
+
+  if (podeAnimar) {
+    const alvos = document.querySelectorAll(
+      ".section-title, .skills-grid, .timeline, .project-media, .contact-title"
+    );
+    const revelador = new IntersectionObserver(
+      (entradas) => {
+        entradas.forEach((entrada) => {
+          if (!entrada.isIntersecting) return;
+          entrada.target.classList.add("is-visible");
+          revelador.unobserve(entrada.target);
+        });
+      },
+      { rootMargin: "0px 0px -12% 0px", threshold: 0.15 }
+    );
+    document.documentElement.classList.add("anima");
+    alvos.forEach((alvo) => revelador.observe(alvo));
+  }
 })();
