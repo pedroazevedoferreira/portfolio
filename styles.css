@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Portfólio · Pedro Azevedo Ferreira · v4 "estação noturna"
+   Portfólio · Pedro Azevedo · v4 "estação noturna"
    Abertura composta a partir da imagem de referência: fundo marinho, azul como luz do
    fluxo processo → API → dados → interface e telas reais em perspectiva.
    1. Fontes  2. Tokens  3. Base  4. Botões  5. Cabeçalho  6. Abertura
@@ -433,7 +433,7 @@ main:focus {
 }
 
 /* Em telas muito estreitas, só o monograma: nome + botão Menu não cabem */
-@media (max-width: 24.49rem) {
+@media (max-width: 22.49rem) {
   .brand-name {
     display: none;
   }

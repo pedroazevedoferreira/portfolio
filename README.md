@@ -1,4 +1,4 @@
-# Pedro Azevedo Ferreira · Portfólio
+# Pedro Azevedo · Portfólio
 
 Portfólio pessoal em HTML, CSS e JavaScript, sem framework, etapa de build ou dependências.
 
@@ -79,7 +79,7 @@ Enquanto uma área não tiver trabalhos, o bloco mostra a descrição e um espa�
 Textos fixos (apresentação, Sobre, Experiência, Contato) estão direto no `index.html`.
 
 **Ao publicar:** se mudar `styles.css`, `script.js` ou `dados.js`, aumente o `?v=` desses arquivos no
-`index.html` (por exemplo, de `?v=4.3` para `?v=4.4`). O GitHub Pages deixa o navegador guardar os
+`index.html` (por exemplo, de `?v=4.4` para `?v=4.5`). O GitHub Pages deixa o navegador guardar os
 arquivos por 10 minutos; sem trocar o endereço, o visitante pode ver o HTML novo com o CSS antigo.
 
 ## Acessibilidade e privacidade
